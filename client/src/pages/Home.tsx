@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Menu, X } from 'lucide-react';
 import { useBlockchainData } from '@/hooks/useBlockchainData';
 import { useClawnchpadTokens } from '@/hooks/useClawnchpadTokens';
 import TerminalLog from '@/components/TerminalLog';
 import AgentLeaderboard from '@/components/AgentLeaderboard';
-import AgentDeployer from '@/components/AgentDeployer';
+import CodeEditor from '@/components/CodeEditor';
 import DocsPanel from '@/components/DocsPanel';
 
 /**
@@ -198,11 +197,11 @@ export default function Home() {
                   [ AGENT DEPLOYER ]
                 </h2>
                 <p className="text-xs text-muted-foreground uppercase tracking-wider">
-                  Configure & launch your agent
+                  Deploy tokens using Dacty SDK
                 </p>
               </div>
 
-              <AgentDeployer />
+              <CodeEditor />
             </div>
           )}
 
@@ -217,7 +216,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t-2 border-dashed border-accent bg-card/30 p-4 text-center text-xs text-muted-foreground uppercase tracking-wider">
-        <div>[ DACTYLOG v1.3 ] — Live Agent Infrastructure for Clawn Ecosystem on Base</div>
+        <div>[ DACTYLOG v1.4 ] — Live Agent Infrastructure for Clawn Ecosystem on Base</div>
       </footer>
     </div>
   );

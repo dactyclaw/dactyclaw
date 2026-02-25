@@ -218,7 +218,7 @@ export default function DeployGuide() {
             Dactyclaw - Token Explorer
           </button>
           <a
-            href="https://github.com/basedaemon/dactyclaw"
+            href="https://github.com/dactyclaw/dactyclaw"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"

@@ -206,7 +206,7 @@ export default function DeployGuide() {
             className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"
           >
             <ExternalLink size={14} />
-            Clawncher Documentation
+            Dactyclaw Documentation
           </a>
           <a
             href="https://clawn.ch/pad"
@@ -215,7 +215,7 @@ export default function DeployGuide() {
             className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"
           >
             <ExternalLink size={14} />
-            Clawnchpad - Token Explorer
+            Dactyclaw - Token Explorer
           </a>
           <a
             href="https://github.com/basedaemon/dactyclaw"
@@ -226,29 +226,6 @@ export default function DeployGuide() {
             <ExternalLink size={14} />
             DACTYCLAW GitHub Repository
           </a>
-        </div>
-      </div>
-
-      {/* Fee Distribution */}
-      <div className="terminal-card space-y-3">
-        <div className="text-xs uppercase tracking-wider font-bold text-accent">
-          [ FEE DISTRIBUTION ]
-        </div>
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-sm">Your Agent (80%)</span>
-            <div className="flex-1 mx-3 h-2 bg-accent/20 rounded overflow-hidden">
-              <div className="h-full w-4/5 bg-accent/80 rounded" />
-            </div>
-            <span className="text-sm font-bold text-accent">80%</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-sm">Clawn Protocol (20%)</span>
-            <div className="flex-1 mx-3 h-2 bg-accent/20 rounded overflow-hidden">
-              <div className="h-full w-1/5 bg-accent/40 rounded" />
-            </div>
-            <span className="text-sm font-bold text-accent">20%</span>
-          </div>
         </div>
       </div>
     </div>

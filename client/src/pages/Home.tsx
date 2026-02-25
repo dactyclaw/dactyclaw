@@ -6,6 +6,7 @@ import { useClawnchpadTokens } from '@/hooks/useClawnchpadTokens';
 import TerminalLog from '@/components/TerminalLog';
 import AgentLeaderboard from '@/components/AgentLeaderboard';
 import AgentDeployer from '@/components/AgentDeployer';
+import DocsPanel from '@/components/DocsPanel';
 
 /**
  * DACTYLOG - Stasiun Pemantau & Peluncuran Agent
@@ -16,16 +17,14 @@ import AgentDeployer from '@/components/AgentDeployer';
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('monitor');
   const { logs, stats, isLoading, error } = useBlockchainData(5000);
   const { tokens: clawnchTokens, isLoading: tokensLoading, error: tokensError } = useClawnchpadTokens(30000);
 
-  // Mock archive data
-  const archiveData = [
-    { id: 'AGENT-001', deployed: '2 days ago', status: 'ACTIVE', burn: '$125K' },
-    { id: 'AGENT-002', deployed: '5 days ago', status: 'ACTIVE', burn: '$98K' },
-    { id: 'AGENT-003', deployed: '1 week ago', status: 'INACTIVE', burn: '$45K' },
-    { id: 'AGENT-004', deployed: '2 weeks ago', status: 'ACTIVE', burn: '$156K' },
-  ];
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    setSidebarOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
@@ -63,28 +62,38 @@ export default function Home() {
         `}
         >
           <nav className="flex flex-col gap-2">
-            <Tabs defaultValue="monitor" className="w-full" onValueChange={() => setSidebarOpen(false)}>
-              <TabsList className="flex flex-col w-full bg-transparent h-auto gap-2">
-                <TabsTrigger
-                  value="monitor"
-                  className="w-full justify-start text-left uppercase tracking-wider text-xs font-bold data-[state=active]:bg-accent/20 data-[state=active]:text-accent"
-                >
-                  [ MONITOR ]
-                </TabsTrigger>
-                <TabsTrigger
-                  value="deploy"
-                  className="w-full justify-start text-left uppercase tracking-wider text-xs font-bold data-[state=active]:bg-accent/20 data-[state=active]:text-accent"
-                >
-                  [ DEPLOY ]
-                </TabsTrigger>
-                <TabsTrigger
-                  value="archive"
-                  className="w-full justify-start text-left uppercase tracking-wider text-xs font-bold data-[state=active]:bg-accent/20 data-[state=active]:text-accent"
-                >
-                  [ ARCHIVE ]
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={() => handleTabChange('monitor')}
+                className={`w-full justify-start text-left uppercase tracking-wider text-xs font-bold p-3 rounded transition-colors ${
+                  activeTab === 'monitor'
+                    ? 'bg-accent/20 text-accent'
+                    : 'hover:bg-accent/10'
+                }`}
+              >
+                [ MONITOR ]
+              </button>
+              <button
+                onClick={() => handleTabChange('deploy')}
+                className={`w-full justify-start text-left uppercase tracking-wider text-xs font-bold p-3 rounded transition-colors ${
+                  activeTab === 'deploy'
+                    ? 'bg-accent/20 text-accent'
+                    : 'hover:bg-accent/10'
+                }`}
+              >
+                [ DEPLOY ]
+              </button>
+              <button
+                onClick={() => handleTabChange('docs')}
+                className={`w-full justify-start text-left uppercase tracking-wider text-xs font-bold p-3 rounded transition-colors ${
+                  activeTab === 'docs'
+                    ? 'bg-accent/20 text-accent'
+                    : 'hover:bg-accent/10'
+                }`}
+              >
+                [ DOCS ]
+              </button>
+            </div>
           </nav>
 
           {/* Stats Panel */}
@@ -119,9 +128,9 @@ export default function Home() {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto">
-          <Tabs defaultValue="monitor" className="w-full h-full">
-            {/* MONITOR TAB */}
-            <TabsContent value="monitor" className="p-4 md:p-6 space-y-6">
+          {/* MONITOR TAB */}
+          {activeTab === 'monitor' && (
+            <div className="p-4 md:p-6 space-y-6">
               <div className="space-y-4">
                 <div className="space-y-2">
                   <h2 className="text-2xl font-bold uppercase tracking-widest">
@@ -178,10 +187,12 @@ export default function Home() {
                   </div>
                 )}
               </div>
-            </TabsContent>
+            </div>
+          )}
 
-            {/* DEPLOY TAB */}
-            <TabsContent value="deploy" className="p-4 md:p-6 space-y-6">
+          {/* DEPLOY TAB */}
+          {activeTab === 'deploy' && (
+            <div className="p-4 md:p-6 space-y-6">
               <div className="space-y-2 mb-6">
                 <h2 className="text-2xl font-bold uppercase tracking-widest">
                   [ AGENT DEPLOYER ]
@@ -192,49 +203,15 @@ export default function Home() {
               </div>
 
               <AgentDeployer />
-            </TabsContent>
+            </div>
+          )}
 
-            {/* ARCHIVE TAB */}
-            <TabsContent value="archive" className="p-4 md:p-6 space-y-6">
-              <div className="space-y-2 mb-6">
-                <h2 className="text-2xl font-bold uppercase tracking-widest">
-                  [ ARCHIVE ]
-                </h2>
-                <p className="text-xs text-muted-foreground uppercase tracking-wider">
-                  Historical agent data & statistics
-                </p>
-              </div>
-
-              <div className="terminal-card space-y-4">
-                <div className="text-xs uppercase tracking-wider font-bold mb-4 text-accent">
-                  [ DEPLOYED AGENTS ]
-                </div>
-                <div className="space-y-3">
-                  {archiveData.map((agent, idx) => (
-                    <div
-                      key={idx}
-                      className="flex justify-between items-center text-xs py-3 px-2 border-b border-dashed border-accent/30 last:border-0 hover:bg-accent/5 transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-muted-foreground">[{agent.id}]</span>
-                        <span className="font-bold">{agent.deployed}</span>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <span
-                          className={
-                            agent.status === 'ACTIVE' ? 'text-accent' : 'text-muted-foreground'
-                          }
-                        >
-                          {agent.status}
-                        </span>
-                        <span className="text-accent">{agent.burn}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </TabsContent>
-          </Tabs>
+          {/* DOCS TAB */}
+          {activeTab === 'docs' && (
+            <div className="p-4 md:p-6 space-y-6">
+              <DocsPanel />
+            </div>
+          )}
         </main>
       </div>
 

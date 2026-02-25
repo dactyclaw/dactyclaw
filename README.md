@@ -2,63 +2,63 @@
 
 > **Agent Monitor & Deployer for Decentralized Infrastructure**
 
-DACTYCLAW adalah platform all-in-one untuk memantau, mengelola, dan meluncurkan autonomous agents di ekosistem blockchain. Dirancang untuk memberikan kontrol penuh atas agent lifecycle dengan interface yang intuitif dan powerful.
+DACTYCLAW is an all-in-one platform for monitoring, managing, and deploying autonomous agents in the blockchain ecosystem. Designed to provide complete control over agent lifecycle with an intuitive and powerful interface.
 
-## 🎯 Apa itu DACTYCLAW?
+## 🎯 What is DACTYCLAW?
 
-DACTYCLAW adalah skill yang memungkinkan developer dan operator untuk:
+DACTYCLAW is a skill that enables developers and operators to:
 
-- **Monitor** aktivitas real-time dari semua agent yang di-deploy
-- **Deploy** agent baru dengan mudah menggunakan step-by-step guide
-- **Explore** ekosistem agent dan token yang tersedia
-- **Manage** parameter dan konfigurasi agent dari satu dashboard
+- **Monitor** real-time activity from all deployed agents
+- **Deploy** new agents easily using a step-by-step guide
+- **Explore** the agent and token ecosystem available
+- **Manage** agent parameters and configuration from a single dashboard
 
-Platform ini dibangun dengan teknologi modern dan dirancang untuk memberikan pengalaman pengguna yang seamless, baik untuk pemula maupun expert.
+Built with modern technology and designed to provide a seamless user experience for both beginners and experts.
 
-## ✨ Fitur Utama
+## ✨ Key Features
 
 ### 1. **Live Activity Monitor**
-- Real-time tracking aktivitas agent di blockchain
-- Live feed dari token deployments, trades, dan burns
-- System status dengan block height tracking
-- Responsive design untuk desktop dan mobile
+- Real-time tracking of agent activity on blockchain
+- Live feed of token deployments, trades, and burns
+- System status with block height tracking
+- Responsive design for desktop and mobile
 
 ### 2. **Agent Deployer**
-- Step-by-step guide untuk membuat dan meluncurkan agent
-- 6 tahap proses yang jelas:
+- Step-by-step guide for creating and launching agents
+- 6 clear process stages:
   - Create an Agent
   - Fund Your Wallet
   - Generate Token DNA
   - Launch Token on Uniswap V4
   - Register On-Chain
   - Monitor & Manage
-- Copyable commands untuk setiap step
+- Copyable commands for each step
 - Minimal ETH requirement: 0.0005 ETH
 
 ### 3. **Token Explorer**
-- Discover semua agent dan token yang tersedia
-- Real-time data dari blockchain
-- Filter dan search functionality
-- Detailed statistics untuk setiap token
+- Discover all available agents and tokens
+- Real-time data from blockchain
+- Filter and search functionality
+- Detailed statistics for each token
 
 ### 4. **Documentation Hub**
-- Comprehensive guides dan tutorials
+- Comprehensive guides and tutorials
 - API documentation
-- Best practices dan tips
+- Best practices and tips
 - Troubleshooting section
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ dan pnpm
+- Node.js 18+ and pnpm
 - Modern web browser (Chrome, Firefox, Safari, Edge)
-- Wallet dengan minimal 0.0005 ETH di Base network
+- Wallet with minimum 0.0005 ETH on Base network
 
 ### Installation
 
 ```bash
 # Clone repository
-git clone https://github.com/[username]/dactyclaw.git
+git clone https://github.com/dactyclaw/dactyclaw.git
 cd dactyclaw
 
 # Install dependencies
@@ -68,75 +68,75 @@ pnpm install
 pnpm dev
 ```
 
-Server akan berjalan di `http://localhost:3000`
+Server will run at `http://localhost:3000`
 
 ### Usage
 
-1. **Buka DACTYCLAW** di browser
-2. **Pilih tab** sesuai kebutuhan:
-   - `[ DEPLOY ]` — Mulai deploy agent baru
-   - `[ EXPLORER ]` — Lihat agent yang tersedia
-   - `[ DOCS ]` — Baca dokumentasi lengkap
-3. **Follow step-by-step guide** untuk deploy
-4. **Copy commands** dan jalankan di terminal
-5. **Monitor progress** di Live Activity Monitor
+1. **Open DACTYCLAW** in your browser
+2. **Select tab** based on your needs:
+   - `[ DEPLOY ]` — Start deploying a new agent
+   - `[ EXPLORER ]` — View available agents
+   - `[ DOCS ]` — Read full documentation
+3. **Follow step-by-step guide** for deployment
+4. **Copy commands** and run in terminal
+5. **Monitor progress** in Live Activity Monitor
 
-## 📋 Tahapan Deploy
+## 📋 Deployment Stages
 
-### Step 01: Create an Agent
+### Stage 01: Create an Agent
 ```bash
 $ npx dactyclaw-agent-create
 ```
-Initialize AI agent kamu dengan DACTYCLAW. Agent akan mendapat:
-- Unique name dan DNA
+Initialize your AI agent with DACTYCLAW. Your agent will receive:
+- Unique name and DNA
 - Wallet address
 - Token contract
 - Repository
 
-### Step 02: Fund Your Wallet
+### Stage 02: Fund Your Wallet
 ```bash
 $ npx dactyclaw-wallet-fund --amount 0.0005
 ```
-Pastikan wallet memiliki minimal **0.0005 ETH** di Base network untuk:
-- Gas fees untuk deployment
+Ensure wallet has minimum **0.0005 ETH** on Base network for:
+- Gas fees for deployment
 - Initial liquidity
 - Transaction costs
 
-### Step 03: Generate Token DNA
+### Stage 03: Generate Token DNA
 ```bash
 $ npx dactyclaw-token-dna --agent [agent-id]
 ```
-Generate unique DNA untuk token kamu:
+Generate unique DNA for your token:
 - Token parameters
 - Supply configuration
 - Fee structure
 - MEV protection settings
 
-### Step 04: Launch Token on Uniswap V4
+### Stage 04: Launch Token on Uniswap V4
 ```bash
 $ npx dactyclaw-token-launch --dna [dna-hash]
 ```
-Deploy token ke Uniswap V4:
+Deploy token to Uniswap V4:
 - Creates ERC-20 token
 - Initializes liquidity pool
 - Enables MEV protection
 - Makes token immediately tradeable
 
-### Step 05: Register On-Chain
+### Stage 05: Register On-Chain
 ```bash
 $ npx dactyclaw-agent-register --token [token-address]
 ```
-Register agent dan token di blockchain:
-- Appears di DACTYCLAW monitor
-- Listed di token explorer
-- Discoverable oleh traders
+Register agent and token on blockchain:
+- Appears in DACTYCLAW monitor
+- Listed in token explorer
+- Discoverable by traders
 - 80% of fees fund agent, 20% flow to protocol
 
-### Step 06: Monitor & Manage
+### Stage 06: Monitor & Manage
 ```bash
 $ npx dactyclaw-agent-monitor
 ```
-Track agent activity real-time:
+Track agent activity in real-time:
 - Live trading volume
 - Fee collection status
 - Liquidity management
@@ -144,7 +144,7 @@ Track agent activity real-time:
 
 ## 🏗️ Architecture
 
-DACTYCLAW dibangun dengan arsitektur modern:
+DACTYCLAW is built with modern architecture:
 
 ```
 ┌─────────────────────────────────────┐
@@ -173,7 +173,7 @@ DACTYCLAW dibangun dengan arsitektur modern:
 - **Build Tool:** Vite 7
 - **State Management:** React Hooks
 - **Data Fetching:** ethers.js, Fetch API
-- **Styling:** Tailwind CSS dengan custom terminal theme
+- **Styling:** Tailwind CSS with custom terminal theme
 - **UI Components:** shadcn/ui
 
 ## 🔧 Development
@@ -202,10 +202,10 @@ dactyclaw/
 ### Development Commands
 
 ```bash
-# Start dev server dengan hot reload
+# Start dev server with hot reload
 pnpm dev
 
-# Build untuk production
+# Build for production
 pnpm build
 
 # Preview production build
@@ -220,7 +220,7 @@ pnpm format
 
 ## 🎨 Design Philosophy
 
-DACTYCLAW menggunakan **Terminal Aesthetic** yang terinspirasi dari:
+DACTYCLAW uses **Terminal Aesthetic** inspired by:
 - Basedaemon (clean, minimal interface)
 - Classic terminal UI (monospace, green neon)
 - Modern web standards (responsive, accessible)
@@ -238,23 +238,23 @@ DACTYCLAW menggunakan **Terminal Aesthetic** yang terinspirasi dari:
 
 ## 📚 Documentation
 
-Dokumentasi lengkap tersedia di:
-- **[ DOCS ]** tab di DACTYCLAW
-- `./docs/` folder di repository
+Full documentation is available at:
+- **[ DOCS ]** tab in DACTYCLAW
+- `./docs/` folder in repository
 - Inline code comments
 
-### Dokumentasi Tersedia:
-- **INSTALLATION.md** — Setup dan konfigurasi
-- **USAGE.md** — Panduan penggunaan lengkap
+### Available Documentation:
+- **INSTALLATION.md** — Setup and configuration
+- **USAGE.md** — Complete usage guide
 - **API.md** — API reference
 - **ARCHITECTURE.md** — Technical deep dive
 - **TROUBLESHOOTING.md** — Common issues & solutions
 
 ## 🤝 Contributing
 
-Kami welcome contributions! Berikut cara berkontribusi:
+We welcome contributions! Here's how to contribute:
 
-1. **Fork** repository
+1. **Fork** the repository
 2. **Create feature branch** (`git checkout -b feature/amazing-feature`)
 3. **Commit changes** (`git commit -m 'Add amazing feature'`)
 4. **Push to branch** (`git push origin feature/amazing-feature`)
@@ -262,47 +262,67 @@ Kami welcome contributions! Berikut cara berkontribusi:
 
 ### Contribution Guidelines
 - Follow existing code style
-- Add tests untuk new features
+- Add tests for new features
 - Update documentation
-- Keep commits atomic dan descriptive
+- Keep commits atomic and descriptive
 
 ## 🐛 Bug Reports & Features
 
-Menemukan bug atau punya ide fitur? Buka issue di GitHub:
-- **Bug Report:** Jelaskan langkah reproduce dan expected behavior
-- **Feature Request:** Describe use case dan benefit
+Found a bug or have a feature idea? Open an issue on GitHub:
+- **Bug Report:** Explain reproduction steps and expected behavior
+- **Feature Request:** Describe use case and benefits
 
 ## 📄 License
 
-DACTYCLAW dilisensikan di bawah **MIT License** — lihat file `LICENSE` untuk detail.
+DACTYCLAW is licensed under the **MIT License** — see `LICENSE` file for details.
 
 ## 🙏 Acknowledgments
 
-DACTYCLAW dibangun dengan inspirasi dari:
+DACTYCLAW is built with inspiration from:
 - Basedaemon (UI/UX philosophy)
 - Modern blockchain infrastructure
 - Open source community
 
 ## 📞 Support
 
-Butuh bantuan? Hubungi kami:
-- **GitHub Issues:** Bug reports dan feature requests
-- **Documentation:** Lihat `/docs` folder
-- **Community:** Join Discord community (link di repo)
+Need help? Contact us:
+- **GitHub Issues:** Bug reports and feature requests
+- **Documentation:** See `/docs` folder
+- **Community:** Join Discord community (link in repo)
 
 ## 🔐 Security
 
-DACTYCLAW adalah frontend-only application. Semua data diambil dari:
+DACTYCLAW is a frontend-only application. All data is fetched from:
 - Public blockchain RPC endpoints
 - Public APIs
 - Browser local storage
 
-**Tidak ada private key atau sensitive data yang disimpan di server.**
+**No private keys or sensitive data are stored on any server.**
+
+## 🚀 Deployment
+
+### Deploy to Vercel
+
+1. **Fork this repository** on GitHub
+2. **Connect to Vercel:**
+   - Go to https://vercel.com
+   - Click "New Project"
+   - Import your GitHub repository
+   - Vercel will auto-detect settings
+   - Click "Deploy"
+
+3. **Your site is live!**
+   - Vercel will provide a URL
+   - Custom domain support available
+
+### Environment Variables
+
+No environment variables required! DACTYCLAW works with public endpoints.
 
 ---
 
 **Made with ❤️ for the agent ecosystem**
 
 **Version:** 3.2  
-**Last Updated:** February 2026  
-**Status:** Production Ready ✅
+**Status:** Production Ready ✅  
+**License:** MIT

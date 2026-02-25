@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Menu, X } from 'lucide-react';
-import { useLiveAgentData } from '@/hooks/useLiveAgentData';
+import { useBlockchainData, useAgentStats } from '@/hooks/useBlockchainData';
 import TerminalLog from '@/components/TerminalLog';
 import AgentLeaderboard from '@/components/AgentLeaderboard';
 import AgentDeployer from '@/components/AgentDeployer';
@@ -9,16 +9,14 @@ import AgentDeployer from '@/components/AgentDeployer';
 /**
  * DACTYLOG - Stasiun Pemantau & Peluncuran Agent
  * 
- * Design Philosophy:
- * - Terminal-first dark mode dengan hijau neon accent
- * - CRT scanline effects dan dashed borders (ala clawn.ch)
- * - Live data streaming dengan animasi pulse
- * - Estetika underground/hacker yang serius
+ * Sekarang dengan live data dari Base blockchain!
+ * Mengambil data real-time dari Clawncher contracts
  */
 
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { logs, stats } = useLiveAgentData(20);
+  const { logs, stats, isLoading, error } = useBlockchainData(5000);
+  const { agents } = useAgentStats();
 
   // Mock archive data
   const archiveData = [
@@ -38,7 +36,7 @@ export default function Home() {
               [ DACTYLOG ]
             </div>
             <div className="text-xs text-muted-foreground uppercase tracking-wider hidden sm:block">
-              Agent Monitor & Deployer
+              {isLoading ? 'Connecting...' : 'Agent Monitor & Deployer'}
             </div>
           </div>
 
@@ -94,18 +92,26 @@ export default function Home() {
               [ SYSTEM STATUS ]
             </div>
             <div className="space-y-2 text-xs">
-              <div className="flex justify-between">
-                <span>Active Agents:</span>
-                <span className="text-accent font-bold">47</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Total Burned:</span>
-                <span className="text-accent font-bold">$2.3M</span>
-              </div>
-              <div className="flex justify-between">
-                <span>24h Volume:</span>
-                <span className="text-accent font-bold">$15.8M</span>
-              </div>
+              {isLoading ? (
+                <div className="text-muted-foreground animate-pulse">[ LOADING... ]</div>
+              ) : error ? (
+                <div className="text-red-500">[ ERROR ]</div>
+              ) : (
+                <>
+                  <div className="flex justify-between">
+                    <span>Block:</span>
+                    <span className="text-accent font-bold">{stats?.currentBlock || 'N/A'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Deployments:</span>
+                    <span className="text-accent font-bold">{stats?.totalDeployments || 0}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Total Burned:</span>
+                    <span className="text-accent font-bold">{stats?.totalBurned || '$0'}</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </aside>
@@ -121,12 +127,27 @@ export default function Home() {
                     [ LIVE ACTIVITY MONITOR ]
                   </h2>
                   <p className="text-xs text-muted-foreground uppercase tracking-wider">
-                    Real-time agent activity stream
+                    {isLoading ? 'Connecting to Base blockchain...' : 'Real-time agent activity from blockchain'}
                   </p>
                 </div>
 
                 {/* Live Log Terminal */}
-                <TerminalLog logs={logs} maxHeight="max-h-96" />
+                {error && (
+                  <div className="terminal-card border-red-500 text-red-500">
+                    <div className="text-xs">[ CONNECTION ERROR ]</div>
+                    <div className="text-xs mt-2">{error}</div>
+                  </div>
+                )}
+
+                {logs.length > 0 ? (
+                  <TerminalLog logs={logs} maxHeight="max-h-96" />
+                ) : (
+                  <div className="terminal-card max-h-96 overflow-y-auto space-y-1 font-mono text-sm flex items-center justify-center">
+                    <div className="text-muted-foreground animate-pulse">
+                      [ FETCHING BLOCKCHAIN DATA... ]
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Agent Leaderboard */}
@@ -134,7 +155,7 @@ export default function Home() {
                 <h3 className="text-xl font-bold uppercase tracking-widest">
                   [ TOP AGENTS ]
                 </h3>
-                <AgentLeaderboard agents={stats} />
+                <AgentLeaderboard agents={agents} />
               </div>
             </TabsContent>
 
@@ -198,7 +219,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t-2 border-dashed border-accent bg-card/30 p-4 text-center text-xs text-muted-foreground uppercase tracking-wider">
-        <div>[ DACTYLOG v1.0 ] — Agent Infrastructure for Clawn Ecosystem</div>
+        <div>[ DACTYLOG v1.1 ] — Live Agent Infrastructure for Clawn Ecosystem on Base</div>
       </footer>
     </div>
   );

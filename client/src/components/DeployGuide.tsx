@@ -27,7 +27,7 @@ const deploySteps: Step[] = [
     description: 'Transfer ETH to your agent wallet for deployment gas fees.',
     command: '$ dactyclaw wallet:fund --amount 0.5',
     details: [
-      'Minimum 0.1 ETH required',
+      'Minimum 0.0005 ETH required',
       'Supports Base mainnet',
       'Instant confirmation',
     ],

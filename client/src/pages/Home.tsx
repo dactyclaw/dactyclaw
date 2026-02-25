@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Menu, X } from 'lucide-react';
-import { useBlockchainData, useAgentStats } from '@/hooks/useBlockchainData';
+import { useBlockchainData } from '@/hooks/useBlockchainData';
+import { useClawnchAgents } from '@/hooks/useClawnchAgents';
 import TerminalLog from '@/components/TerminalLog';
 import AgentLeaderboard from '@/components/AgentLeaderboard';
 import AgentDeployer from '@/components/AgentDeployer';
@@ -16,7 +17,7 @@ import AgentDeployer from '@/components/AgentDeployer';
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { logs, stats, isLoading, error } = useBlockchainData(5000);
-  const { agents } = useAgentStats();
+  const { agents: clawnchAgents, stats: clawnchStats, isLoading: agentsLoading } = useClawnchAgents(10000);
 
   // Mock archive data
   const archiveData = [
@@ -100,15 +101,15 @@ export default function Home() {
                 <>
                   <div className="flex justify-between">
                     <span>Block:</span>
-                    <span className="text-accent font-bold">{stats?.currentBlock || 'N/A'}</span>
+                    <span className="text-accent font-bold">{clawnchStats?.blockNumber || 'N/A'}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Deployments:</span>
-                    <span className="text-accent font-bold">{stats?.totalDeployments || 0}</span>
+                    <span>Agents:</span>
+                    <span className="text-accent font-bold">{clawnchAgents.length || 0}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Total Burned:</span>
-                    <span className="text-accent font-bold">{stats?.totalBurned || '$0'}</span>
+                    <span>Volume:</span>
+                    <span className="text-accent font-bold">{clawnchStats?.totalVolume || '$0'}</span>
                   </div>
                 </>
               )}
@@ -141,10 +142,20 @@ export default function Home() {
 
                 {logs.length > 0 ? (
                   <TerminalLog logs={logs} maxHeight="max-h-96" />
-                ) : (
+                ) : isLoading ? (
                   <div className="terminal-card max-h-96 overflow-y-auto space-y-1 font-mono text-sm flex items-center justify-center">
                     <div className="text-muted-foreground animate-pulse">
                       [ FETCHING BLOCKCHAIN DATA... ]
+                    </div>
+                  </div>
+                ) : error ? (
+                  <div className="terminal-card max-h-96 border-red-500 text-red-500 flex items-center justify-center">
+                    <div className="text-xs">[ CONNECTION ERROR: {error} ]</div>
+                  </div>
+                ) : (
+                  <div className="terminal-card max-h-96 overflow-y-auto space-y-1 font-mono text-sm flex items-center justify-center">
+                    <div className="text-muted-foreground">
+                      [ NO RECENT ACTIVITY ]
                     </div>
                   </div>
                 )}
@@ -153,9 +164,15 @@ export default function Home() {
               {/* Agent Leaderboard */}
               <div className="space-y-4">
                 <h3 className="text-xl font-bold uppercase tracking-widest">
-                  [ TOP AGENTS ]
+                  [ TOP AGENTS ] {agentsLoading && <span className="text-xs text-muted-foreground">[ LOADING... ]</span>}
                 </h3>
-                <AgentLeaderboard agents={agents} />
+                {clawnchAgents.length > 0 ? (
+                  <AgentLeaderboard agents={clawnchAgents} />
+                ) : (
+                  <div className="terminal-card text-center py-8 text-muted-foreground">
+                    [ NO AGENTS FOUND ON BLOCKCHAIN ]
+                  </div>
+                )}
               </div>
             </TabsContent>
 

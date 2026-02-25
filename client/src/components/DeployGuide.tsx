@@ -9,6 +9,10 @@ interface Step {
   details?: string[];
 }
 
+interface DeployGuideProps {
+  onNavigate?: (tab: string) => void;
+}
+
 const deploySteps: Step[] = [
   {
     number: '01',
@@ -199,24 +203,20 @@ export default function DeployGuide() {
           [ RESOURCES ]
         </div>
         <div className="space-y-2 text-sm">
-          <a
-            href="https://clawn.ch/er/docs"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"
+          <button
+            onClick={() => window.location.hash = '#docs'}
+            className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors w-full text-left"
           >
             <ExternalLink size={14} />
             Dactyclaw Documentation
-          </a>
-          <a
-            href="https://clawn.ch/pad"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors"
+          </button>
+          <button
+            onClick={() => window.location.hash = '#explorer'}
+            className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors w-full text-left"
           >
             <ExternalLink size={14} />
             Dactyclaw - Token Explorer
-          </a>
+          </button>
           <a
             href="https://github.com/basedaemon/dactyclaw"
             target="_blank"

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DeployGuide from '@/components/DeployGuide';
 import DactyclawDocs from '@/components/DactyclawDocs';
 import DactyclawExplorer from '@/components/DactyclawExplorer';
@@ -10,6 +10,20 @@ import DactyclawExplorer from '@/components/DactyclawExplorer';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('deploy');
+
+  // Handle hash navigation
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1);
+      if (hash === 'docs' || hash === 'explorer' || hash === 'deploy') {
+        setActiveTab(hash);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    handleHashChange();
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">

@@ -17,7 +17,7 @@ const deploySteps: Step[] = [
   {
     number: '01',
     title: 'Create an Agent',
-    description: 'Initialize your AI agent with DACTYCLAW. Your agent gets a name, DNA, wallet, and token.',
+    description: 'Initialize your AI agent with DACTYCLAW. Your agent gets a name, DNA, and wallet.',
     command: '$ npx dacty-create',
     details: [
       'Agent receives unique DNA signature',
@@ -27,60 +27,16 @@ const deploySteps: Step[] = [
   },
   {
     number: '02',
-    title: 'Fund Your Wallet',
-    description: 'Transfer ETH to your agent wallet for deployment gas fees.',
-    command: '$ dactyclaw wallet:fund --amount 0.5',
+    title: 'Launch Token',
+    description: 'Deploy your token on Base with your custom name and symbol. 80% of fees fund your agent.',
+    command: '$ npx dacty-launch',
     details: [
-      'Minimum 0.0005 ETH required',
-      'Supports Base mainnet',
-      'Instant confirmation',
-    ],
-  },
-  {
-    number: '03',
-    title: 'Generate Token DNA',
-    description: 'Create unique token configuration with supply, fees, and distribution.',
-    command: '$ dactyclaw token:generate --name "MyToken" --symbol "MYTKN"',
-    details: [
-      'Set initial supply (100B tokens)',
-      'Configure LP fee (500 bps default)',
-      'Setup protocol fee (100 bps default)',
-    ],
-  },
-  {
-    number: '04',
-    title: 'Launch Token on Uniswap V4',
-    description: 'Deploy your token with MEV protection and liquidity pool on Base.',
-    command: '$ dactyclaw token:launch --config token.json',
-    details: [
-      'Creates ERC-20 token',
-      'Initializes Uniswap V4 pool',
-      'Enables MEV protection',
+      'Input token name and symbol',
+      'Set total supply',
+      'Deploy to Base network',
       'Immediately tradeable',
-    ],
-  },
-  {
-    number: '05',
-    title: 'Register On-Chain',
-    description: 'Register your agent and token on Clawn registry for discovery.',
-    command: '$ dactyclaw agent:register --token 0x...',
-    details: [
-      'Appears in DACTYCLAW monitor',
-      'Listed on Clawnchpad',
-      'Discoverable by traders',
       '80% of fees fund your agent',
-    ],
-  },
-  {
-    number: '06',
-    title: 'Monitor & Manage',
-    description: 'Track your agent activity, token performance, and fee distribution in real-time.',
-    command: '$ dactyclaw agent:monitor',
-    details: [
-      'Live trading volume',
-      'Fee collection status',
-      'Liquidity management',
-      'Agent performance metrics',
+      '20% flow back to Dactyclaw',
     ],
   },
 ];
@@ -106,7 +62,7 @@ export default function DeployGuide() {
             become an<br />operator
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-            one command. your agent gets a name, DNA, wallet, and token. 80% of token fees fund your agent. 20% flow back to Clawn.
+            one command. your agent gets a name, DNA, wallet, and token. 80% of token fees fund your agent. 20% flow back to Dactyclaw.
           </p>
         </div>
 
@@ -128,9 +84,6 @@ export default function DeployGuide() {
             {copiedCommand === 'npx dacty-create' && (
               <div className="text-xs text-green-400">✓ Copied to clipboard</div>
             )}
-          <div className="text-xs text-muted-foreground">
-              or use the web spawner below →
-            </div>
           </div>
         </div>
       </div>

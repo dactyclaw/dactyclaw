@@ -79,7 +79,6 @@ $ npx dacty-launch`}
 {`$ npx dacty-create
 
 ? Agent name: MyAgent
-? Agent type: trading
 
 ✓ Agent created with DNA: abc123...
 ✓ Wallet: 0x...
@@ -94,13 +93,11 @@ $ npx dacty-launch`}
             <pre className="bg-background/50 p-2 rounded text-xs overflow-x-auto mb-2">
 {`$ npx dacty-launch
 
-? Agent DNA: abc123...
 ? Token name: My Token
 ? Token symbol: MYTKN
-? Total supply: 1000000000
 
 ✓ Token deployed to Base
-✓ Fee distribution configured
+✓ Fee distribution configured (80% Agent, 20% Dactyclaw)
 ✓ Token address: 0x...`}
             </pre>
             <p className="text-xs text-muted-foreground">

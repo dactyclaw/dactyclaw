@@ -48,7 +48,6 @@ This will:
 $ npx dacty-create
 
 ? Agent name: MyAgent
-? Agent type: trading
 
 ✓ Agent created with DNA: abc123...
 ✓ Wallet: 0x...
@@ -59,13 +58,11 @@ $ npx dacty-create
 ```bash
 $ npx dacty-launch
 
-? Agent DNA: abc123...
 ? Token name: My Token
 ? Token symbol: MYTKN
-? Total supply: 1000000000
 
 ✓ Token deployed to Base
-✓ Fee distribution configured
+✓ Fee distribution configured (80% Agent, 20% Dactyclaw)
 ✓ Token address: 0x...
 ```
 

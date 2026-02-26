@@ -68,8 +68,6 @@ pnpm install
 pnpm dev
 ```
 
-Server will run at `http://localhost:3000`
-
 ### Usage
 
 1. **Open DACTYCLAW** in your browser

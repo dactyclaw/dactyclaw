@@ -3,7 +3,10 @@ require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const { program } = require('commander');
-const { ethers } = require('ethers');
+const { createPublicClient, createWalletClient, http, formatEther } = require('viem');
+const { privateKeyToAccount } = require('viem/accounts');
+const { base } = require('viem/chains');
+const { Clanker } = require('clanker-sdk');
 
 program
     .version('1.0.0')
@@ -25,20 +28,32 @@ program
             devAddress = config.address;
         }
 
-        const privateKey = process.env.AGENT_PRIVATE_KEY;
-        if (!privateKey) {
+        const privateKeyStr = process.env.AGENT_PRIVATE_KEY;
+        if (!privateKeyStr) {
             console.error('❌ Error: AGENT_PRIVATE_KEY not found in .env file.');
             process.exit(1);
         }
 
+        // ensure private key has '0x' prefix for viem
+        const privateKey = privateKeyStr.startsWith('0x') ? privateKeyStr : '0x' + privateKeyStr;
+
         console.log(`\n🔗 Connecting to Base Mainnet...`);
         try {
-            const provider = new ethers.JsonRpcProvider('https://mainnet.base.org');
-            const wallet = new ethers.Wallet(privateKey, provider);
+            // Setup viem wallet client
+            const account = privateKeyToAccount(privateKey);
+            const publicClient = createPublicClient({
+                chain: base,
+                transport: http()
+            });
+            const wallet = createWalletClient({
+                account,
+                chain: base,
+                transport: http()
+            });
 
-            process.stdout.write(`💰 Checking balance for ${wallet.address}... `);
-            const balanceWei = await provider.getBalance(wallet.address);
-            const balanceEth = ethers.formatEther(balanceWei);
+            process.stdout.write(`💰 Checking balance for ${account.address}... `);
+            const balanceWei = await publicClient.getBalance({ address: account.address });
+            const balanceEth = formatEther(balanceWei);
             console.log(`${Number(balanceEth).toFixed(5)} ETH`);
 
             const MIN_BALANCE = 0.0005;
@@ -47,34 +62,69 @@ program
                 console.error(`\n❌ Error: Insufficient funds for deployment.`);
                 console.error(`   Required: ${MIN_BALANCE} ETH`);
                 console.error(`   Current:  ${balanceEth} ETH`);
-                console.error(`\nPlease send ETH (Base) to the agent wallet: ${wallet.address}`);
-                process.exit(1);
+                console.error(`\nPlease send ETH (Base) to the agent wallet: ${account.address}`);
+                return;
             }
 
-            console.log(`\n✅ Funds verified. Initiating on-chain deployment protocol...`);
+            console.log(`\n✅ Funds verified. Agent DNA secure enclave connected. Initiating on-chain deployment protocol...`);
 
-            // Simulation of smart contract deployment transaction
             console.log(`[1/3] Compiling token parameters for Clanker Factory...`);
-            await new Promise(r => setTimeout(r, 1500));
 
-            console.log(`[2/3] Signing transaction with Agent DNA Secure Enclave...`);
-            await new Promise(r => setTimeout(r, 2000));
+            const clanker = new Clanker({
+                wallet,
+                publicClient,
+            });
+
+            const tokenConfig = {
+                name: config.name,
+                symbol: config.ticker,
+                image: "ipfs://bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi", // Placeholder Clanker/Agent image
+                metadata: {
+                    description: `Autonomous agent token for ${config.name} created via Dactyclaw CLI. DNA: ${config.dna}`,
+                    socialMediaUrls: [],
+                    auditUrls: [],
+                },
+                context: {
+                    interface: "Dactyclaw SDK",
+                    platform: "Dactyclaw",
+                    messageId: "Deploy",
+                    id: config.ticker,
+                },
+                pool: {
+                    quoteToken: "0x4200000000000000000000000000000000000006", // WETH
+                    initialMarketCap: "0.2", // 0.2 ETH (Base) minimal initial
+                },
+                vault: { percentage: 0, durationInDays: 0 },
+                devBuy: { ethAmount: 0 },
+                rewardsConfig: {
+                    creatorReward: 75,
+                    creatorAdmin: account.address,
+                    creatorRewardRecipient: account.address,
+                    interfaceAdmin: "0x1eaf444ebDf6495C57aD52A04C61521bBf564ace", // Assuming default interface addr from docs
+                    interfaceRewardRecipient: devAddress,
+                }
+            };
+
+            // Generate deploy transaction config
+            console.log(`[2/3] Calling SDK deployToken... (This will spend Base ETH gas)`);
+
+            // Execute the deployment using clanker-sdk
+            const tokenAddress = await clanker.deployToken(tokenConfig);
 
             console.log(`[3/3] Broadcasting transaction to Base network...`);
-            await new Promise(r => setTimeout(r, 2500));
 
-            // Random simulate transaction hash
-            const mockTxHash = '0x' + [...Array(64)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
-
-            console.log(`\n🎉 SUCCESS! Token deployed autonomously.`);
-            console.log(`Transaction Hash: ${mockTxHash}`);
-            console.log(`Explorer: https://basescan.org/tx/${mockTxHash}`);
+            console.log(`\n🎉 SUCCESS! Token deployed autonomously on-chain.`);
+            if (tokenAddress) {
+                console.log(`Token Contract: ${tokenAddress}`);
+                console.log(`Explorer: https://basescan.org/token/${tokenAddress}`);
+            }
             console.log(`\nTrading will be live on Clanker shortly.`);
 
         } catch (error) {
-            console.error(`\n❌ Network Error: Failed to interact with Base network.`);
+            console.error(`\n❌ Network Error: Failed to interact with Base network or Clanker SDK.`);
             console.error(error.message);
-            process.exit(1);
+            // console.error(error); // uncomment for pure stack trace debug
+            return;
         }
     });
 

@@ -18,6 +18,39 @@ export const appRouter = router({
     }),
   }),
 
+  tokens: router({
+    live: publicProcedure.query(async () => {
+      try {
+        // Fetch live token data from clawn.ch
+        const response = await fetch('https://clawn.ch/api/tokens', {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch tokens');
+        }
+        
+        const tokens = await response.json();
+        
+        // Return top 5 tokens
+        return tokens.slice(0, 5).map((token: any) => ({
+          name: token.name,
+          symbol: token.symbol,
+          price: token.price,
+          volume_24h: token.volume_24h,
+          market_cap: token.market_cap,
+          price_change_24h: token.price_change_24h,
+          image: token.image,
+        }));
+      } catch (error) {
+        console.error('Error fetching live tokens:', error);
+        return [];
+      }
+    }),
+  }),
+
   agents: router({
     create: protectedProcedure
       .input(

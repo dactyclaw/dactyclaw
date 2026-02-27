@@ -7,6 +7,7 @@ const { createPublicClient, createWalletClient, http, formatEther } = require('v
 const { privateKeyToAccount } = require('viem/accounts');
 const { base } = require('viem/chains');
 const { Clanker } = require('clanker-sdk/v4');
+const { POOL_POSITIONS } = require('clanker-sdk');
 
 program
     .version('1.0.0')
@@ -80,6 +81,7 @@ program
             const tokenConfig = {
                 name: config.name,
                 symbol: config.ticker,
+                tokenAdmin: account.address,
                 image: "ipfs://bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi", // Placeholder Clanker/Agent image
                 metadata: {
                     description: `Autonomous agent token for ${config.name} created via Dactyclaw CLI. DNA: ${config.dna}`,
@@ -95,37 +97,33 @@ program
                 pool: {
                     quoteToken: "0x4200000000000000000000000000000000000006", // WETH
                     initialMarketCap: "0.2", // 0.2 ETH (Base) minimal initial
+                    positions: POOL_POSITIONS.Standard
                 },
-                vault: { percentage: 0, durationInDays: 0 },
-                devBuy: { ethAmount: 0 },
-                rewardsConfig: {
-                    creatorReward: 75,
-                    creatorAdmin: account.address,
-                    creatorRewardRecipient: account.address,
-                    interfaceAdmin: "0x1eaf444ebDf6495C57aD52A04C61521bBf564ace", // Assuming default interface addr from docs
-                    interfaceRewardRecipient: devAddress,
-                }
+                vault: { percentage: 0, lockupDuration: 604800 },
+                devBuy: { ethAmount: 0.0001 }
             };
 
-            // Generate deploy transaction config
-            console.log(`[2/3] Calling SDK deployToken... (This will spend Base ETH gas)`);
-
-            // Execute the deployment using clanker-sdk
-            const tokenAddress = await clanker.deployToken(tokenConfig);
+            // Execute the deployment using clanker-sdk v4
+            console.log(`[2/3] Calling SDK deploy... (This will spend Base ETH gas)`);
+            const deployResult = await clanker.deploy(tokenConfig);
 
             console.log(`[3/3] Broadcasting transaction to Base network...`);
+            console.log(`Transaction Hash: ${deployResult.txHash}`);
+
+            console.log(`Waiting for confirmation...`);
+            const result = await deployResult.waitForTransaction();
 
             console.log(`\n🎉 SUCCESS! Token deployed autonomously on-chain.`);
-            if (tokenAddress) {
-                console.log(`Token Contract: ${tokenAddress}`);
-                console.log(`Explorer: https://basescan.org/token/${tokenAddress}`);
+            if (result && result.address) {
+                console.log(`Token Contract: ${result.address}`);
+                console.log(`Explorer: https://basescan.org/token/${result.address}`);
             }
             console.log(`\nTrading will be live on Clanker shortly.`);
 
         } catch (error) {
             console.error(`\n❌ Network Error: Failed to interact with Base network or Clanker SDK.`);
             console.error(error.message);
-            // console.error(error); // uncomment for pure stack trace debug
+            console.error(error); // debug raw error
             return;
         }
     });

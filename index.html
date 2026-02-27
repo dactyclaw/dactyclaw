@@ -1011,8 +1011,15 @@
             loadMoreBtn.style.display = 'none';
 
             try {
-                const res = await fetch('/api/tokens');
-                const data = await res.json();
+                let data;
+                try {
+                    const r = await fetch('/api/tokens');
+                    if (!r.ok) throw new Error('proxy unavailable');
+                    data = await r.json();
+                } catch {
+                    const r = await fetch('https://clawn.ch/api/tokens');
+                    data = await r.json();
+                }
 
                 if (data.success && data.tokens) {
                     allTokens = data.tokens;
@@ -1031,12 +1038,11 @@
                 }
             } catch (err) {
                 container.innerHTML = `
-                <div class="error-msg">
-                    ⚠ Could not fetch tokens directly. This may be due to CORS restrictions.<br><br>
-                    View the live token leaderboard directly at:
-                    <a href="https://clawn.ch/pad/" target="_blank">clawn.ch/pad/</a>
-                </div>
-            `;
+                    <div class="error-msg">
+                        ⚠ Could not fetch tokens. Check your connection.<br><br>
+                        View directly at: <a href="https://clawn.ch/pad/" target="_blank">clawn.ch/pad/</a>
+                    </div>
+                `;
             }
 
             loading.style.display = 'none';

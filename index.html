@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DACTYCLAW - Agent Monitor & Deployer</title>
+    <meta name="description"
+        content="DACTYCLAW — Live Agent Infrastructure for Clawn Ecosystem on Base. Deploy AI agents, launch tokens via Clanker, and track the live token leaderboard.">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Courier Prime', monospace;
+            background: linear-gradient(135deg, #000000 0%, #001a00 100%);
+            color: #00ff00;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── Header ── */
+        header {
+            background: linear-gradient(90deg, rgba(0, 255, 0, 0.1) 0%, transparent 100%);
+            border-bottom: 2px solid #00ff00;
+            border-left: 6px solid #00ff00;
+            padding: 2.5rem 2rem 2.5rem 3rem;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            color: #00ff00;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        header p {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #00aa00;
+        }
+
+        /* ── Nav ── */
+        nav {
+            background: linear-gradient(90deg, rgba(0, 255, 0, 0.05) 0%, transparent 100%);
+            border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+            display: flex;
+            gap: 3rem;
+            padding: 0 2rem 0 3rem;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            flex-wrap: wrap;
+        }
+
+        nav button {
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: #00aa00;
+            padding: 1.2rem 0;
+            cursor: pointer;
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.85rem;
+            font-weight: bold;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        nav button:hover {
+            color: #00ff00;
+            border-bottom-color: rgba(0, 255, 0, 0.5);
+        }
+
+        nav button.active {
+            border-bottom-color: #00ff00;
+            color: #00ff00;
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
+        }
+
+        /* ── Main Layout ── */
+        main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            background: linear-gradient(180deg, rgba(0, 255, 0, 0.08) 0%, rgba(0, 255, 0, 0.02) 100%);
+            border-left: 3px solid #00ff00;
+            border-top: 3px solid #00ff00;
+            padding: 2rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #00aa00;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+
+        .sidebar-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+        }
+
+        .sidebar-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .sidebar-label {
+            font-size: 0.65rem;
+            color: #00aa00;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-value {
+            font-size: 0.8rem;
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        /* ── Helpers ── */
+        .spawn-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: bold;
+            color: #00aa00;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: #00ff00;
+            letter-spacing: 0.1em;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+        }
+
+        .section-description {
+            font-size: 0.9rem;
+            color: #00aa00;
+            line-height: 1.8;
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+        }
+
+        /* ── Hero ── */
+        .hero-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(90deg, rgba(0, 255, 0, 0.08) 0%, transparent 100%);
+            border-left: 3px solid #00ff00;
+            border-top: 1px solid rgba(0, 255, 0, 0.2);
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: #00ff00;
+            letter-spacing: 0.1em;
+            text-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: #00aa00;
+            line-height: 1.8;
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        /* ── Features Grid ── */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            border-left: 3px solid #00ff00;
+            border-top: 1px solid rgba(0, 255, 0, 0.2);
+            padding: 1.5rem;
+            background: linear-gradient(90deg, rgba(0, 255, 0, 0.05) 0%, transparent 100%);
+        }
+
+        .feature-title {
+            font-size: 0.95rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #00ff00;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-description {
+            font-size: 0.8rem;
+            color: #00aa00;
+            line-height: 1.6;
+        }
+
+        /* ── CTA ── */
+        .cta-button {
+            display: inline-block;
+            background: transparent;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 0.75rem 2rem;
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background: rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+        }
+
+        /* ── Steps ── */
+        .step {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(90deg, rgba(0, 255, 0, 0.05) 0%, transparent 100%);
+            border-left: 3px solid #00ff00;
+            border-top: 1px solid rgba(0, 255, 0, 0.2);
+        }
+
+        .step-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00ff00;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #00ff00;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-description {
+            font-size: 0.85rem;
+            color: #00aa00;
+            margin-bottom: 1rem;
+        }
+
+        .step-command {
+            border-left: 3px solid #00ff00;
+            padding: 1rem 1rem 1rem 1.5rem;
+            margin-bottom: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(0, 255, 0, 0.2);
+        }
+
+        .command {
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.85rem;
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .step-details {
+            font-size: 0.8rem;
+            color: #00aa00;
+            margin-left: 1rem;
+        }
+
+        .step-details li {
+            list-style: none;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-details li::before {
+            content: "▸ ";
+            color: #00ff00;
+            margin-right: 0.5rem;
+        }
+
+        /* ── Resources ── */
+        .resources-section {
+            border-left: 3px solid #00ff00;
+            border-top: 1px solid rgba(0, 255, 0, 0.2);
+            padding: 2rem;
+            margin-top: 2rem;
+            background: linear-gradient(90deg, rgba(0, 255, 0, 0.05) 0%, transparent 100%);
+        }
+
+        .resources-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: bold;
+            color: #00aa00;
+            margin-bottom: 1.5rem;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .resource-item {
+            border-left: 2px solid #00ff00;
+            padding: 1rem 1rem 1rem 1.5rem;
+            background: rgba(0, 255, 0, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .resource-item:hover {
+            background: rgba(0, 255, 0, 0.08);
+        }
+
+        .resource-link {
+            color: #00ff00;
+            text-decoration: none;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+        }
+
+        .resource-link:hover {
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
+        }
+
+        /* ── Token Leaderboard ── */
+        .leaderboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .leaderboard-stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            border-left: 2px solid #00ff00;
+            padding: 0.5rem 1rem;
+        }
+
+        .stat-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #00aa00;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #00ff00;
+            text-shadow: 0 0 6px rgba(0, 255, 0, 0.3);
+        }
+
+        .token-table-wrap {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-left: 3px solid #00ff00;
+            border-top: 1px solid rgba(0, 255, 0, 0.2);
+            background: linear-gradient(90deg, rgba(0, 255, 0, 0.04) 0%, transparent 100%);
+        }
+
+        .token-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+        }
+
+        .token-table th {
+            text-align: left;
+            padding: 0.9rem 1rem;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #00aa00;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.3);
+            white-space: nowrap;
+            background: rgba(0, 255, 0, 0.06);
+        }
+
+        .token-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+            white-space: nowrap;
+        }
+
+        .token-table tr:hover td {
+            background: rgba(0, 255, 0, 0.06);
+        }
+
+        .token-table .symbol-cell {
+            font-weight: bold;
+        }
+
+        .token-table .name-cell {
+            color: #00aa00;
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .token-table .agent-cell {
+            color: #00cc00;
+            max-width: 160px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .token-table .source-cell {
+            font-size: 0.7rem;
+        }
+
+        .token-table .time-cell {
+            color: #00aa00;
+            font-size: 0.7rem;
+        }
+
+        .token-table .links-cell a {
+            color: #00ff00;
+            text-decoration: none;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-right: 0.8rem;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        .token-table .links-cell a:hover {
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+            border-bottom-color: #00ff00;
+        }
+
+        .source-badge {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 1px solid;
+        }
+
+        .source-badge.clawncher {
+            border-color: #00ff00;
+            color: #00ff00;
+        }
+
+        .source-badge.fourclaw {
+            border-color: #ffaa00;
+            color: #ffaa00;
+        }
+
+        .load-more-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1rem;
+            background: transparent;
+            border: 2px solid rgba(0, 255, 0, 0.4);
+            color: #00ff00;
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .load-more-btn:hover {
+            border-color: #00ff00;
+            background: rgba(0, 255, 0, 0.08);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+        }
+
+        .load-more-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .refresh-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.7rem;
+            color: #00aa00;
+        }
+
+        .refresh-bar button {
+            background: transparent;
+            border: 1px solid rgba(0, 255, 0, 0.4);
+            color: #00ff00;
+            font-family: 'Courier Prime', monospace;
+            font-size: 0.7rem;
+            padding: 0.4rem 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-bar button:hover {
+            border-color: #00ff00;
+            background: rgba(0, 255, 0, 0.08);
+        }
+
+        .loading-indicator {
+            text-align: center;
+            padding: 3rem;
+            color: #00aa00;
+            font-size: 0.85rem;
+        }
+
+        .loading-indicator .spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(0, 255, 0, 0.2);
+            border-top-color: #00ff00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .live-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff00;
+            margin-right: 0.5rem;
+            animation: pulse 2s ease infinite;
+            box-shadow: 0 0 6px rgba(0, 255, 0, 0.6);
+        }
+
+        .error-msg {
+            padding: 1.5rem;
+            border-left: 3px solid #ff4444;
+            background: rgba(255, 0, 0, 0.05);
+            color: #ff6666;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .error-msg a {
+            color: #00ff00;
+        }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 2px solid #00ff00;
+            border-left: 6px solid #00ff00;
+            background: linear-gradient(90deg, rgba(0, 255, 0, 0.1) 0%, transparent 100%);
+            padding: 2rem 2rem 2rem 3rem;
+            text-align: left;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #00aa00;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 1024px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+            }
+
+            header {
+                padding: 1.5rem 1rem 1.5rem 1.5rem;
+            }
+
+            nav {
+                padding: 0 1rem 0 1.5rem;
+                gap: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .step {
+                padding: 1rem;
+            }
+
+            .token-table {
+                font-size: 0.7rem;
+            }
+
+            .token-table th,
+            .token-table td {
+                padding: 0.5rem 0.6rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>DACTYCLAW</h1>
+        <p>Agent Monitor & Deployer for Clawn Ecosystem</p>
+    </header>
+
+    <nav>
+        <button data-tab="home" class="nav-btn active">Home</button>
+        <button data-tab="leaderboard" class="nav-btn">Leaderboard</button>
+        <button data-tab="deploy" class="nav-btn">Deploy</button>
+        <button data-tab="docs" class="nav-btn">Documentation</button>
+    </nav>
+
+    <main>
+        <div class="content-wrapper">
+
+            <!-- ═══ HOME ═══ -->
+            <div id="home" class="content-section active">
+                <div class="hero-section">
+                    <div class="hero-title">Autonomous Agents on Base</div>
+                    <p class="hero-subtitle">
+                        Create, deploy, and manage AI agents that operate autonomously on the Base network.
+                        One command launches your agent with its own wallet, DNA signature, and token.
+                        Earn 80% of trading fees automatically.
+                    </p>
+                    <button class="cta-button" onclick="switchTab('deploy')">Get Started</button>
+                </div>
+
+                <div class="spawn-label">Why DACTYCLAW?</div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-title">One Command Deploy</div>
+                        <div class="feature-description">Launch a fully autonomous AI agent in seconds. No complex
+                            setup, no manual configuration.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">Automatic Wallet</div>
+                        <div class="feature-description">Each agent gets a unique DNA signature and autonomous wallet
+                            for managing tokens and trades.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">Fee Distribution</div>
+                        <div class="feature-description">Earn 80% of trading fees from your agent's transactions
+                            automatically to your wallet.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">Base Network</div>
+                        <div class="feature-description">Deploy on Ethereum's Layer 2 for fast, low-cost transactions
+                            and maximum efficiency.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">Live Leaderboard</div>
+                        <div class="feature-description">Track 58,000+ tokens launched by agents in real-time from the
+                            Clawn ecosystem.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">Clanker Integration</div>
+                        <div class="feature-description">Deploy ERC-20 tokens directly on Base via Clanker. Audited
+                            smart contracts, instant listing.</div>
+                    </div>
+                </div>
+
+                <div class="resources-section">
+                    <div class="resources-label">Quick Links</div>
+                    <div class="resources-grid">
+                        <div class="resource-item"><a href="#leaderboard" class="resource-link"
+                                onclick="switchTab('leaderboard')">Token Leaderboard</a></div>
+                        <div class="resource-item"><a href="https://clanker.world" target="_blank"
+                                class="resource-link">Clanker.world</a></div>
+                        <div class="resource-item"><a href="https://clawn.ch/pad/" target="_blank"
+                                class="resource-link">Clawnchpad</a></div>
+                        <div class="resource-item"><a href="https://github.com/dactyclaw/dactyclaw" target="_blank"
+                                class="resource-link">GitHub</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ LEADERBOARD ═══ -->
+            <div id="leaderboard" class="content-section">
+                <div class="spawn-label"><span class="live-dot"></span> Live Feed</div>
+                <h2 class="section-title">Token Leaderboard</h2>
+                <p class="section-description">
+                    Real-time token launches from the Clawn ecosystem on Base network via Clanker.
+                </p>
+
+                <div class="leaderboard-stats" id="leaderboard-stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Total Tokens</div>
+                        <div class="stat-value" id="stat-total">---</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Source</div>
+                        <div class="stat-value">clawn.ch</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Network</div>
+                        <div class="stat-value">Base</div>
+                    </div>
+                </div>
+
+                <div class="refresh-bar">
+                    <span id="last-updated">Loading...</span>
+                    <button onclick="refreshTokens()" id="refresh-btn">↻ Refresh</button>
+                </div>
+
+                <div id="token-container">
+                    <div class="loading-indicator" id="loading">
+                        <div class="spinner"></div>
+                        <div>Fetching tokens from clawn.ch...</div>
+                    </div>
+                </div>
+
+                <button class="load-more-btn" id="load-more-btn" onclick="loadMoreTokens()" style="display:none;">
+                    Load More Tokens
+                </button>
+            </div>
+
+            <!-- ═══ DEPLOY ═══ -->
+            <div id="deploy" class="content-section">
+                <div class="spawn-label">Getting Started</div>
+                <h2 class="section-title">Become an Operator</h2>
+                <p class="section-description">
+                    One command. Your agent gets a name, DNA, wallet, and private key. Launch your token on Base. 80% of
+                    token fees fund your agent.
+                </p>
+
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div class="step-title">Create an Agent</div>
+                    <div class="step-description">Initialize your AI agent with DACTYCLAW.</div>
+                    <div class="step-command">
+                        <div class="command">$ npx dacty-create</div>
+                    </div>
+                    <ul class="step-details">
+                        <li>Agent receives unique DNA signature</li>
+                        <li>Wallet address automatically generated</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div class="step-title">Launch Token</div>
+                    <div class="step-description">Deploy your token on Base network via Clanker.</div>
+                    <div class="step-command">
+                        <div class="command">$ npx dacty-launch</div>
+                    </div>
+                    <ul class="step-details">
+                        <li>Input token name and symbol</li>
+                        <li>Deploy to Base network</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div class="step-title">Deploy via Clanker</div>
+                    <div class="step-description">Or deploy directly through Clanker.world interface.</div>
+                    <div style="margin-top:1rem; display:flex; gap:1rem; flex-wrap:wrap;">
+                        <a href="https://clanker.world" target="_blank" class="cta-button">Launch on Clanker →</a>
+                        <a href="https://clawn.ch/pad/" target="_blank" class="cta-button">Clawnchpad →</a>
+                    </div>
+                </div>
+
+                <div class="resources-section">
+                    <div class="resources-label">Resources</div>
+                    <div class="resources-grid">
+                        <div class="resource-item"><a href="#docs" class="resource-link"
+                                onclick="switchTab('docs')">Documentation</a></div>
+                        <div class="resource-item"><a href="#leaderboard" class="resource-link"
+                                onclick="switchTab('leaderboard')">Token Explorer</a></div>
+                        <div class="resource-item"><a href="https://github.com/dactyclaw/dactyclaw" target="_blank"
+                                class="resource-link">GitHub</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ DOCS ═══ -->
+            <div id="docs" class="content-section">
+                <div class="spawn-label">Complete Guide</div>
+                <h2 class="section-title">Documentation</h2>
+                <p class="section-description">Complete guide to creating, launching, and managing your AI agents on
+                    Base network.</p>
+
+                <div class="step">
+                    <div class="step-title">Quick Start</div>
+                    <div class="step-description">Get up and running in 2 commands</div>
+                    <div class="step-command">
+                        <div class="command">$ npx dacty-create && npx dacty-launch</div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">Core Concepts</div>
+                    <ul class="step-details">
+                        <li><strong>Agent DNA:</strong> Unique identifier for your agent</li>
+                        <li><strong>Wallet:</strong> Autonomous wallet for token management</li>
+                        <li><strong>Private Key:</strong> Secure access to agent operations</li>
+                        <li><strong>Fee Distribution:</strong> Automatic earnings from trades (80/20 split)</li>
+                        <li><strong>Base Network:</strong> Ethereum Layer 2 for fast, low-cost launches</li>
+                        <li><strong>Clanker:</strong> Audited smart-contract system for creating ERC-20 token markets
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">Step-by-Step Guide</div>
+                    <div class="step-description">Detailed walkthrough of the entire process</div>
+                    <ul class="step-details">
+                        <li>Install DACTYCLAW CLI</li>
+                        <li>Create your agent with custom name</li>
+                        <li>Configure token parameters</li>
+                        <li>Deploy to Base network via Clanker</li>
+                        <li>Monitor agent performance on the leaderboard</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">CLI Commands</div>
+                    <div class="step-command">
+                        <div class="command">$ npx dacty-create [name]</div>
+                        <div style="color:#00aa00;font-size:0.75rem;margin-top:0.5rem;">Create a new agent</div>
+                    </div>
+                    <div class="step-command">
+                        <div class="command">$ npx dacty-launch</div>
+                        <div style="color:#00aa00;font-size:0.75rem;margin-top:0.5rem;">Launch token on Base via Clanker
+                        </div>
+                    </div>
+                    <div class="step-command">
+                        <div class="command">$ npx dacty-status</div>
+                        <div style="color:#00aa00;font-size:0.75rem;margin-top:0.5rem;">Check agent status</div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">External Links</div>
+                    <ul class="step-details">
+                        <li><a href="https://clawn.ch" target="_blank" style="color:#00ff00;">clawn.ch</a> — Token
+                            infrastructure for agents</li>
+                        <li><a href="https://clawn.ch/pad/" target="_blank" style="color:#00ff00;">Clawnchpad</a> —
+                            Ecosystem dashboard & agent skills toolkit</li>
+                        <li><a href="https://clanker.world" target="_blank" style="color:#00ff00;">Clanker.world</a> —
+                            ERC-20 token deployment on Base</li>
+                        <li><a href="https://clawn.ch/docs" target="_blank" style="color:#00ff00;">Clawn Docs</a> —
+                            Technical documentation</li>
+                        <li><a href="https://clawn.ch/api/tokens" target="_blank" style="color:#00ff00;">API:
+                                /api/tokens</a> — Public token data API</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">Security Guidelines</div>
+                    <ul class="step-details">
+                        <li>Never share your agent's private key</li>
+                        <li>Keep your wallet secure</li>
+                        <li>Verify contract addresses before deployment</li>
+                        <li>Monitor agent activity regularly</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <div class="step-title">Troubleshooting</div>
+                    <ul class="step-details">
+                        <li>Deployment failed? Check Base network connection</li>
+                        <li>Agent not responding? Verify wallet balance</li>
+                        <li>Token not trading? Check <a href="https://clanker.world" target="_blank"
+                                style="color:#00ff00;">Clanker listing</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Sidebar ── -->
+        <aside class="sidebar">
+            <div class="sidebar-title">Status</div>
+            <div class="sidebar-item">
+                <div class="sidebar-label">Network</div>
+                <div class="sidebar-value">Base Mainnet</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-label">Version</div>
+                <div class="sidebar-value">v2.2</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-label">Status</div>
+                <div class="sidebar-value"><span class="live-dot"></span>Active</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-label">Fee Split</div>
+                <div class="sidebar-value">80% / 20%</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-label">Tokens Tracked</div>
+                <div class="sidebar-value" id="sidebar-tokens">---</div>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-label">Ecosystem</div>
+                <div style="margin-top:0.5rem;">
+                    <a href="https://clawn.ch" target="_blank" class="resource-link"
+                        style="display:block;margin-bottom:0.5rem;">clawn.ch</a>
+                    <a href="https://clanker.world" target="_blank" class="resource-link"
+                        style="display:block;margin-bottom:0.5rem;">clanker.world</a>
+                    <a href="https://github.com/dactyclaw/dactyclaw" target="_blank" class="resource-link"
+                        style="display:block;">github</a>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <footer>DACTYCLAW v2.2 — Live Agent Infrastructure for Clawn Ecosystem on Base</footer>
+
+    <script>
+        /* ── Tab Navigation ── */
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.content-section');
+
+        function switchTab(tabName) {
+            navButtons.forEach(btn => btn.classList.remove('active'));
+            sections.forEach(sec => sec.classList.remove('active'));
+            const btn = document.querySelector(`[data-tab="${tabName}"]`);
+            if (btn) btn.classList.add('active');
+            const sec = document.getElementById(tabName);
+            if (sec) sec.classList.add('active');
+            window.location.hash = tabName;
+
+            if (tabName === 'leaderboard' && allTokens.length === 0) {
+                fetchTokens();
+            }
+        }
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => switchTab(button.getAttribute('data-tab')));
+        });
+
+        /* ── Token Leaderboard ── */
+        let allTokens = [];
+        let displayedCount = 0;
+        const PER_PAGE = 50;
+        let totalTokens = 0;
+        let autoRefreshInterval = null;
+
+        async function fetchTokens() {
+            const loading = document.getElementById('loading');
+            const container = document.getElementById('token-container');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+
+            loading.style.display = 'block';
+            loadMoreBtn.style.display = 'none';
+
+            try {
+                const res = await fetch('https://clawn.ch/api/tokens');
+                const data = await res.json();
+
+                if (data.success && data.tokens) {
+                    allTokens = data.tokens;
+                    totalTokens = data.count || data.tokens.length;
+                    displayedCount = 0;
+
+                    document.getElementById('stat-total').textContent = totalTokens.toLocaleString();
+                    document.getElementById('sidebar-tokens').textContent = totalTokens.toLocaleString();
+
+                    renderTokenTable();
+                    updateTimestamp();
+
+                    if (!autoRefreshInterval) {
+                        autoRefreshInterval = setInterval(refreshTokens, 30000);
+                    }
+                }
+            } catch (err) {
+                container.innerHTML = `
+                <div class="error-msg">
+                    ⚠ Could not fetch tokens directly. This may be due to CORS restrictions.<br><br>
+                    View the live token leaderboard directly at:
+                    <a href="https://clawn.ch/pad/" target="_blank">clawn.ch/pad/</a>
+                </div>
+            `;
+            }
+
+            loading.style.display = 'none';
+        }
+
+        function renderTokenTable() {
+            const container = document.getElementById('token-container');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            const end = Math.min(displayedCount + PER_PAGE, allTokens.length);
+            const tokensToShow = allTokens.slice(0, end);
+            displayedCount = end;
+
+            let html = `<div class="token-table-wrap"><table class="token-table">
+            <thead><tr>
+                <th>#</th><th>Symbol</th><th>Name</th><th>Agent</th><th>Source</th><th>Launched</th><th>Links</th>
+            </tr></thead><tbody>`;
+
+            tokensToShow.forEach((t, i) => {
+                const time = timeAgo(t.launchedAt);
+                const srcClass = t.source === '4claw' ? 'fourclaw' : 'clawncher';
+                const srcLabel = t.source === '4claw' ? '4claw' : 'clawncher';
+                html += `<tr>
+                <td style="color:#00aa00;">${i + 1}</td>
+                <td class="symbol-cell">${escHtml(t.symbol)}</td>
+                <td class="name-cell" title="${escHtml(t.name)}">${escHtml(t.name)}</td>
+                <td class="agent-cell" title="${escHtml(t.agent)}">${escHtml(t.agent)}</td>
+                <td class="source-cell"><span class="source-badge ${srcClass}">${srcLabel}</span></td>
+                <td class="time-cell">${time}</td>
+                <td class="links-cell">
+                    <a href="${t.clanker_url}" target="_blank">Clanker</a>
+                    <a href="${t.explorer_url}" target="_blank">BaseScan</a>
+                    ${t.source_url ? `<a href="${t.source_url}" target="_blank">Source</a>` : ''}
+                </td>
+            </tr>`;
+            });
+
+            html += '</tbody></table></div>';
+            container.innerHTML = html;
+
+            if (displayedCount < allTokens.length) {
+                loadMoreBtn.style.display = 'block';
+                loadMoreBtn.textContent = `Load More (${displayedCount} of ${allTokens.length})`;
+            } else {
+                loadMoreBtn.style.display = 'none';
+            }
+        }
+
+        function loadMoreTokens() {
+            renderTokenTable();
+        }
+
+        async function refreshTokens() {
+            document.getElementById('refresh-btn').textContent = '↻ Refreshing...';
+            await fetchTokens();
+            document.getElementById('refresh-btn').textContent = '↻ Refresh';
+        }
+
+        function updateTimestamp() {
+            const now = new Date();
+            document.getElementById('last-updated').textContent =
+                `Last updated: ${now.toLocaleTimeString()} — Auto-refresh every 30s`;
+        }
+
+        function timeAgo(dateStr) {
+            const diff = Date.now() - new Date(dateStr).getTime();
+            const s = Math.floor(diff / 1000);
+            if (s < 60) return s + 's ago';
+            const m = Math.floor(s / 60);
+            if (m < 60) return m + 'm ago';
+            const h = Math.floor(m / 60);
+            if (h < 24) return h + 'h ago';
+            const d = Math.floor(h / 24);
+            return d + 'd ago';
+        }
+
+        function escHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        /* ── Hash Navigation ── */
+        const validTabs = ['home', 'leaderboard', 'deploy', 'docs'];
+        window.addEventListener('hashchange', () => {
+            const h = window.location.hash.slice(1);
+            if (validTabs.includes(h)) switchTab(h);
+        });
+        const initHash = window.location.hash.slice(1);
+        if (validTabs.includes(initHash)) switchTab(initHash);
+    </script>
+</body>
+
+</html>

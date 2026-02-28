@@ -1,55 +1,274 @@
-# DACTYCLAW
-
-**Autonomous On-Chain Agent Orchestration Protocol on Base**
-
-Dactyclaw is a powerful, self-sustaining process and full-stack web interface designed to launch, monitor, and manage autonomous AI agents. Unlike traditional tracking wrappers, Dactyclaw features its own independent on-chain tracker and agent deployer logic—operating securely without relying on third-party ecosystem dashboards.
-
----
-
-## ⚡ Core Features
-
-- **Autonomous Agent Deployment** — One-command CLI (`npx dactyclaw`) to instantly generate AI agent DNA, provision wallets, and deploy smart contracts.
-- **Direct Base Mainnet Integration** — Seamlessly deploys ERC-20 tokens via [Clanker](https://clanker.world) directly on the Base network.
-- **Self-Sustaining Protocol** — Employs a continuous loop process that automatically funds, checks balances, and launches agents without manual hand-holding.
-- **Serverless Tracking (JSONBin)** — Every Dactyclaw-spawned agent is logged directly into an independent serverless database, completely bypassing legacy centralized APIs.
-- **Live Leaderboard & UI** — A modern, terminal-styled web dashboard providing real-time tracking of deployed agents, fully decoupled from the deprecated Clawn ecosystem.
+<p align="center">
+  <strong>DACTYCLAW</strong><br>
+  <em>Autonomous On-Chain Agent Orchestration Protocol</em>
+</p>
 
 ---
 
-## 🚀 Quick Start
+## Introduction
 
-Getting started with Dactyclaw is incredibly simple. You only need one command to initiate the autonomous orchestration process:
+Dactyclaw is a fully autonomous, self-sustaining protocol designed to deploy, manage, and monitor AI-powered on-chain agents on the **Base network**. It combines a powerful command-line interface with a modern web dashboard, enabling developers and operators to launch ERC-20 tokens through [Clanker](https://clanker.world) with zero manual intervention after initialization.
 
-```bash
-$ npx dactyclaw
+Unlike traditional token launchers that require step-by-step user interaction, Dactyclaw operates as a continuous orchestration process. Once started, it autonomously generates agent identities, provisions Ethereum wallets, monitors funding status, and executes smart contract deployments—all within a single terminal session.
+
+Every agent deployed through Dactyclaw is automatically tracked via an independent serverless database, ensuring complete data sovereignty without reliance on third-party infrastructure.
+
+---
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Key Features](#key-features)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [CLI Reference](#cli-reference)
+- [Web Dashboard](#web-dashboard)
+- [Configuration](#configuration)
+- [API Reference](#api-reference)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+- [Resources](#resources)
+- [License](#license)
+
+---
+
+## Key Features
+
+| Feature | Description |
+|---|---|
+| **One-Command Deployment** | Launch the full orchestration process with a single `npx dactyclaw` command. |
+| **Autonomous Agent Lifecycle** | Automatic DNA generation, wallet provisioning, balance monitoring, and contract deployment. |
+| **Base Mainnet Native** | Direct ERC-20 token deployment on Base via Clanker smart contracts. |
+| **Serverless Agent Tracking** | All deployed agents are logged to an independent JSONBin database in real-time. |
+| **Live Web Dashboard** | Terminal-themed responsive UI with live leaderboard, agent feed, and deployment documentation. |
+| **Self-Funding Loop** | Continuous balance polling with automatic deployment trigger once funding threshold is met. |
+| **CORS Proxy Router** | Built-in local proxy server for secure API communication without exposing credentials. |
+
+---
+
+## Architecture
+
+Dactyclaw follows a modular architecture consisting of three primary layers:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                     Web Dashboard                       │
+│  ┌──────────┐  ┌──────────┐  ┌────────┐  ┌──────────┐  │
+│  │   Home   │  │  Agents  │  │ Leader │  │   Docs   │  │
+│  │          │  │   Feed   │  │ board  │  │          │  │
+│  └──────────┘  └──────────┘  └────────┘  └──────────┘  │
+└─────────────────────┬───────────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────────┐
+│                   Proxy Router                          │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
+│  │  /api/tokens │  │ /api/agents  │  │   CORS HDR   │  │
+│  └──────────────┘  └──────────────┘  └──────────────┘  │
+└─────────────────────┬───────────────────────────────────┘
+                      │
+┌─────────────────────▼───────────────────────────────────┐
+│                  CLI Orchestrator                        │
+│  ┌──────────┐  ┌──────────┐  ┌──────────────────────┐  │
+│  │  Agent   │  │  Wallet  │  │  Clanker Contract    │  │
+│  │   DNA    │  │  Funding │  │  Deployment Engine   │  │
+│  └──────────┘  └──────────┘  └──────────────────────┘  │
+└─────────────────────────────────────────────────────────┘
 ```
 
-The protocol will:
-1. Generate unique Agent DNA and instantiate a secure Ethereum wallet.
-2. Monitor the wallet continuously until it receives the required Base ETH (e.g. 0.0005 ETH).
-3. Automatically launch the agent's ERC-20 token on Clanker.
-4. Sync the new agent to the live Dactyclaw web dashboard leaderboard.
+**Data Flow:**
+1. The CLI Orchestrator generates agent credentials and monitors wallet balances.
+2. Upon receiving sufficient ETH, the orchestrator triggers Clanker contract deployment.
+3. Deployment metadata is pushed to JSONBin (serverless database).
+4. The Proxy Router securely serves data to the Web Dashboard.
+5. The Web Dashboard renders live agent feeds and leaderboard data.
 
 ---
 
-## 🌐 Web Dashboard
+## Getting Started
 
-The Dactyclaw front-end is a fully responsive, professional terminal-themed interface featuring:
-- **Home** — Overview of the protocol architecture.
-- **Agents** — A live, auto-updating feed of all autonomous tokens specifically deployed by the Dactyclaw protocol.
-- **Leaderboard** — Real-time tracking of the broader agent token network.
-- **Deploy/Docs** — Built-in terminal UI containing step-by-step documentation for deploying your own agents.
+### Prerequisites
+
+- **Node.js** v18 or later
+- **npm** v9 or later
+- An Ethereum wallet funded with at least **0.0005 ETH** on the Base network
+
+### Installation
+
+No installation is required. Dactyclaw runs directly via `npx`:
+
+```bash
+npx dactyclaw
+```
+
+### What Happens Next
+
+Once the process starts, Dactyclaw will:
+
+1. **Generate Agent Identity** — Creates a unique DNA signature and agent profile.
+2. **Provision Wallet** — Generates a new Ethereum keypair for the agent.
+3. **Monitor Balance** — Continuously polls the wallet until the funding threshold is reached.
+4. **Deploy Contract** — Automatically submits an ERC-20 token deployment transaction via Clanker.
+5. **Sync to Dashboard** — Pushes the deployed agent metadata to the serverless tracking database.
+
+The entire process is non-interactive after the initial command execution.
 
 ---
 
-## 🔗 Resources
+## CLI Reference
 
-- **X (Twitter):** [@dactyclaw](https://x.com/dactyclaw)
+### Primary Command
+
+```bash
+npx dactyclaw [options]
+```
+
+### Options
+
+| Flag | Description |
+|---|---|
+| `--name <name>` | Specify a custom agent name (default: auto-generated). |
+| `--ticker <symbol>` | Set the token ticker symbol. |
+| `--image <url>` | Provide a custom token image URL. |
+| `--help` | Display usage information. |
+
+### Example
+
+```bash
+npx dactyclaw --name "SentinelAlpha" --ticker "SNTL"
+```
+
+---
+
+## Web Dashboard
+
+The Dactyclaw web interface is a fully responsive, terminal-themed dashboard built with vanilla HTML, CSS, and JavaScript. It provides real-time visibility into the protocol's operations.
+
+### Pages
+
+| Page | Description |
+|---|---|
+| **Home** | Protocol overview, feature highlights, and ecosystem statistics. |
+| **Agents** | Live feed of all tokens deployed through the Dactyclaw protocol, sourced from the independent serverless database. |
+| **Leaderboard** | Broader agent token network rankings with auto-refresh every 30 seconds. |
+| **Deploy** | Interactive documentation with deployment commands and configuration guides. |
+| **Docs** | Complete CLI reference, architecture documentation, and external resource links. |
+
+### Running Locally
+
+To run the dashboard on your local machine:
+
+```bash
+# Start the CORS proxy router
+node proxy.js
+
+# In a separate terminal, serve the static files
+npx http-server -p 8089
+```
+
+Then open `http://127.0.0.1:8089` in your browser.
+
+---
+
+## Configuration
+
+### Environment Variables
+
+| Variable | Description | Default |
+|---|---|---|
+| `JSONBIN_KEY` | JSONBin API key for agent tracking database access. | Built-in fallback |
+| `PORT` | Port for the local proxy server. | `5500` |
+
+### Proxy Server
+
+The included `proxy.js` handles CORS headers and routes API requests between the web dashboard and external services. It supports the following endpoints:
+
+| Endpoint | Source | Description |
+|---|---|---|
+| `/api/tokens` | External token API | Fetches the broader token leaderboard data. |
+| `/api/dactyclaw-agents` | JSONBin | Retrieves agents deployed specifically by Dactyclaw. |
+
+---
+
+## API Reference
+
+### GET `/api/tokens`
+
+Returns the full list of agent-launched tokens from the broader network.
+
+**Response:**
+```json
+[
+  {
+    "name": "TokenName",
+    "ticker": "TKN",
+    "contractAddress": "0x...",
+    "createdAt": "2026-02-28T11:14:41.000Z",
+    "img": "https://..."
+  }
+]
+```
+
+### GET `/api/dactyclaw-agents`
+
+Returns all agents deployed through the Dactyclaw protocol.
+
+**Response:**
+```json
+{
+  "record": {
+    "agents": [
+      {
+        "name": "AgentName",
+        "ticker": "AGT",
+        "contractAddress": "0x...",
+        "deployedAt": "2026-02-28T14:30:00.000Z"
+      }
+    ]
+  }
+}
+```
+
+---
+
+## Project Structure
+
+```
+dactyclaw/
+├── index.html          # Web dashboard (single-page application)
+├── proxy.js            # CORS proxy router for API endpoints
+├── package.json        # NPM package configuration and dependencies
+├── bin/
+│   ├── dactyclaw.js    # Main CLI orchestrator (autonomous deployment loop)
+│   ├── dacty-create.js # Agent DNA and wallet generator
+│   └── dacty-launch.js # Token deployment executor
+├── .gitignore          # Git exclusion rules
+└── README.md           # This file
+```
+
+---
+
+## Contributing
+
+Contributions are welcome. To get started:
+
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m "feat: add your feature"`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Open a Pull Request against `main`.
+
+Please ensure all commits follow the [Conventional Commits](https://www.conventionalcommits.org/) specification.
+
+---
+
+## Resources
+
+- **Twitter (X):** [@dactyclaw](https://x.com/dactyclaw)
 - **GitHub:** [dactyclaw/dactyclaw](https://github.com/dactyclaw/dactyclaw)
 - **Clanker:** [clanker.world](https://clanker.world)
 
 ---
 
-## 📜 License
+## License
 
-MIT License
+This project is licensed under the [MIT License](LICENSE).

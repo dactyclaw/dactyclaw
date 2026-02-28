@@ -1,36 +1,56 @@
 # DACTYCLAW
 
-**Agent Monitor & Deployer for Clawn Ecosystem on Base**
+**Autonomous On-Chain Agent Orchestration Protocol on Base**
 
-## Features
+Dactyclaw is a powerful, self-sustaining process and full-stack web interface designed to launch, monitor, and manage autonomous AI agents. Unlike traditional tracking wrappers, Dactyclaw features its own independent on-chain tracker and agent deployer logic—operating securely without relying on third-party ecosystem dashboards.
 
-- **Live Token Leaderboard** — Real-time feed from [clawn.ch/api/tokens](https://clawn.ch/api/tokens) tracking 58,000+ agent-launched tokens
-- **Deploy Agents** — One-command CLI to create autonomous AI agents with unique DNA and wallet
-- **Launch Tokens** — Deploy ERC-20 tokens on Base network via [Clanker](https://clanker.world)
-- **80/20 Fee Split** — Agents earn 80% of trading fees automatically
+---
 
-## Quick Start
+## ⚡ Core Features
+
+- **Autonomous Agent Deployment** — One-command CLI (`npx dactyclaw`) to instantly generate AI agent DNA, provision wallets, and deploy smart contracts.
+- **Direct Base Mainnet Integration** — Seamlessly deploys ERC-20 tokens via [Clanker](https://clanker.world) directly on the Base network.
+- **Self-Sustaining Protocol** — Employs a continuous loop process that automatically funds, checks balances, and launches agents without manual hand-holding.
+- **Serverless Tracking (JSONBin)** — Every Dactyclaw-spawned agent is logged directly into an independent serverless database, completely bypassing legacy centralized APIs.
+- **Live Leaderboard & UI** — A modern, terminal-styled web dashboard providing real-time tracking of deployed agents, fully decoupled from the deprecated Clawn ecosystem.
+
+---
+
+## 🚀 Quick Start
+
+Getting started with Dactyclaw is incredibly simple. You only need one command to initiate the autonomous orchestration process:
 
 ```bash
-$ npx dacty-create    # Create an agent
-$ npx dacty-launch    # Launch token on Base
+# Launch the Interactive Process for Auto-Agent Generation & Contract Deployment
+$ npx dactyclaw
 ```
 
-## Website
+The protocol will:
+1. Generate unique Agent DNA and instantiate a secure Ethereum wallet.
+2. Monitor the wallet continuously until it receives the required Base ETH (e.g. 0.0005 ETH).
+3. Automatically launch the agent's ERC-20 token on Clanker.
+4. Sync the new agent to the live Dactyclaw web dashboard leaderboard.
 
-The DACTYCLAW website includes:
-- **Home** — Overview and features
-- **Leaderboard** — Live token feed from Clawn ecosystem (auto-refreshes every 30s)
-- **Deploy** — Step-by-step deployment guide + direct links to Clanker
-- **Documentation** — Complete CLI reference and guides
+---
 
-## Links
+## 🌐 Web Dashboard
 
-- [Clawn.ch](https://clawn.ch) — Token infrastructure for agents
-- [Clawnchpad](https://clawn.ch/pad/) — Ecosystem dashboard
-- [Clanker.world](https://clanker.world) — ERC-20 token deployment on Base
-- [API: /api/tokens](https://clawn.ch/api/tokens) — Public token data
+The Dactyclaw front-end is a fully responsive, professional terminal-themed interface featuring:
+- **Home** — Overview of the protocol architecture.
+- **Agents** — A live, auto-updating feed of all autonomous tokens specifically deployed by the Dactyclaw protocol.
+- **Leaderboard** — Real-time tracking of the broader agent token network.
+- **Deploy/Docs** — Built-in terminal UI containing step-by-step documentation for deploying your own agents.
 
-## License
+---
 
-MIT
+## 🔗 Resources
+
+- **X (Twitter):** [@dactyclaw](https://x.com/dactyclaw)
+- **GitHub:** [dactyclaw/dactyclaw](https://github.com/dactyclaw/dactyclaw)
+- **Clanker:** [clanker.world](https://clanker.world)
+
+---
+
+## 📜 License
+
+MIT License

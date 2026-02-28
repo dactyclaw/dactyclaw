@@ -1,11 +1,12 @@
 export default async function handler(req, res) {
-    const JSONBIN_URL = 'https://api.jsonbin.io/v3/b/67c14caaad19ca34f80b24f1/latest';
-    const JSONBIN_KEY = '$2a$10$jsDLVDSonos71rMkOkpSxu5Pll3LLRFr/VDhbh4ibbOPVFCwfkSjy';
+    const BIN_ID = '69a2ff58d0ea881f40e21084';
+    const API_KEY = '$2a$10$52cNICm.70qXCx0qkKBG5erLYGg1HMceR1gT4OOPOe5uzCiAJShOG';
+    const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
 
     try {
         const response = await fetch(JSONBIN_URL, {
             headers: {
-                'X-Master-Key': JSONBIN_KEY,
+                'X-Master-Key': API_KEY,
                 'X-Bin-Meta': 'false'
             }
         });

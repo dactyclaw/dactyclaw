@@ -55,21 +55,21 @@ program
             });
 
             process.stdout.write(`💰 Checking balance for ${account.address}... `);
-            const balanceWei = await publicClient.getBalance({ address: account.address });
-            const balanceEth = formatEther(balanceWei);
+            let balanceWei = await publicClient.getBalance({ address: wallet.account.address });
+            let balanceEth = formatEther(balanceWei);
             console.log(`${Number(balanceEth).toFixed(5)} ETH`);
 
-            const MIN_BALANCE = 0.0005;
+            const MIN_BALANCE = 0.001; // Require 0.001 ETH minimum for normal Deploy LP (v4 gas requirement)
 
             if (Number(balanceEth) < MIN_BALANCE) {
                 console.error(`\n❌ Error: Insufficient funds for deployment.`);
-                console.error(`   Required: ${MIN_BALANCE} ETH`);
-                console.error(`   Current:  ${balanceEth} ETH`);
-                console.error(`\nPlease send ETH (Base) to the agent wallet: ${account.address}`);
-                return;
+                console.error(`   The Clanker Token Factory via Base Network requires Gas Fees (Est. >0.0006 ETH).`);
+                console.error(`   Please Top-up your Agent Wallet at least ${MIN_BALANCE} ETH:`);
+                console.error(`   ${wallet.address}`);
+                process.exit(1);
             }
 
-            console.log(`\n✅ Funds verified. Agent DNA secure enclave connected. Initiating on-chain deployment protocol...`);
+            console.log(`✅ Funds verified. Agent DNA secure enclave connected. Initiating on-chain deployment protocol...`);
 
             console.log(`[1/3] Compiling token parameters for Clanker Factory...`);
 
@@ -102,7 +102,7 @@ program
                 vault: { percentage: 0, lockupDuration: 604800 }
             };
 
-            // Execute the deployment using clanker-sdk v4
+            // Execute Standard normal V4 deployment
             console.log(`[2/3] Calling SDK deploy... (This will spend Base ETH gas)`);
             const deployResult = await clanker.deploy(tokenConfig);
 

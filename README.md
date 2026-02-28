@@ -15,12 +15,42 @@ Every agent deployed through Dactyclaw is automatically tracked via an independe
 
 ---
 
+## Getting Started
+
+### Prerequisites
+
+- **Node.js** v18 or later
+- **npm** v9 or later
+- An Ethereum wallet funded with at least **0.0005 ETH** on the Base network
+
+### Installation
+
+No installation is required. Dactyclaw runs directly via `npx`:
+
+```bash
+npx dactyclaw
+```
+
+### What Happens Next
+
+Once the process starts, Dactyclaw will:
+
+1. **Generate Agent Identity** — Creates a unique DNA signature and agent profile.
+2. **Provision Wallet** — Generates a new Ethereum keypair for the agent.
+3. **Monitor Balance** — Continuously polls the wallet until the funding threshold is reached.
+4. **Deploy Contract** — Automatically submits an ERC-20 token deployment transaction via Clanker.
+5. **Sync to Dashboard** — Pushes the deployed agent metadata to the serverless tracking database.
+
+The entire process is non-interactive after the initial command execution.
+
+---
+
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Getting Started](#getting-started)
 - [Key Features](#key-features)
 - [Architecture](#architecture)
-- [Getting Started](#getting-started)
 - [CLI Reference](#cli-reference)
 - [Web Dashboard](#web-dashboard)
 - [Project Structure](#project-structure)
@@ -79,36 +109,6 @@ Dactyclaw follows a modular architecture consisting of three primary layers:
 3. Deployment metadata is pushed to JSONBin (serverless database).
 4. The Proxy Router securely serves data to the Web Dashboard.
 5. The Web Dashboard renders live agent feeds and leaderboard data.
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- **Node.js** v18 or later
-- **npm** v9 or later
-- An Ethereum wallet funded with at least **0.0005 ETH** on the Base network
-
-### Installation
-
-No installation is required. Dactyclaw runs directly via `npx`:
-
-```bash
-npx dactyclaw
-```
-
-### What Happens Next
-
-Once the process starts, Dactyclaw will:
-
-1. **Generate Agent Identity** — Creates a unique DNA signature and agent profile.
-2. **Provision Wallet** — Generates a new Ethereum keypair for the agent.
-3. **Monitor Balance** — Continuously polls the wallet until the funding threshold is reached.
-4. **Deploy Contract** — Automatically submits an ERC-20 token deployment transaction via Clanker.
-5. **Sync to Dashboard** — Pushes the deployed agent metadata to the serverless tracking database.
-
-The entire process is non-interactive after the initial command execution.
 
 ---
 

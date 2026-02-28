@@ -1420,9 +1420,6 @@
             const statAgentsEl = document.getElementById('stat-agents');
             if (statAgentsEl) statAgentsEl.textContent = dactyclawAgents.length.toLocaleString();
 
-            const sidebarTokensEl = document.getElementById('sidebar-tokens');
-            if (sidebarTokensEl) sidebarTokensEl.textContent = dactyclawAgents.length.toLocaleString();
-
             const end = Math.min(displayedAgentsCount + PER_PAGE, dactyclawAgents.length);
             const tokensToShow = dactyclawAgents.slice(0, end);
             displayedAgentsCount = end;

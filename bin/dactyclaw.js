@@ -49,6 +49,7 @@ program
         const ticker = tickerInput || defaultTicker;
 
         const description = await ask('? Agent Description (optional): ');
+        const imageUrl = await ask('? Token Image URL (optional): ');
 
         // Wallet setup
         const localWallet = ethers.Wallet.createRandom();
@@ -68,7 +69,9 @@ program
             name,
             ticker,
             dnaId,
+            dnaId,
             description: description || "An autonomous agent in the Dactyclaw ecosystem",
+            imageUrl: imageUrl || "",
             network: "base",
             createdAt: new Date().toISOString(),
             wallet: { address: localWallet.address }
@@ -127,7 +130,7 @@ program
             name,
             symbol: ticker,
             tokenAdmin: account.address,
-            image: "ipfs://bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi",
+            image: imageUrl || "",
             metadata: { description: description || "Deployed via Dactyclaw Seamless CLI", socialMediaUrls: [], auditUrls: [] },
             context: { interface: "Dactyl", platform: "Dactyl", messageId: dnaId, id: ticker },
             pool: { pairedToken: "WETH", initialMarketCap: "0.2", positions: ROOT_POS_V4.Standard }

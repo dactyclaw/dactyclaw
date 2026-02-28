@@ -1,6 +1,6 @@
 {
   "name": "dactyclaw",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "**Agent Monitor & Deployer for Clawn Ecosystem on Base**",
   "main": "proxy.js",
   "bin": {

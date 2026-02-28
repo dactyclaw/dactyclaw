@@ -1,6 +1,20 @@
 {
   "rewrites": [
-    { "source": "/api/tokens", "destination": "/api/tokens" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/api/tokens",
+      "destination": "/api/tokens"
+    },
+    {
+      "source": "/api/top-tokens",
+      "destination": "/api/top-tokens"
+    },
+    {
+      "source": "/api/dactyclaw-agents",
+      "destination": "/api/dactyclaw-agents"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }

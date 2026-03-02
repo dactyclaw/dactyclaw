@@ -1,5 +1,5 @@
 ﻿{
-  "name": "dectyclaw",
+  "name": "dectyclaw-agent",
   "version": "1.0.1",
   "description": "**Agent Monitor & Deployer for Clawn Ecosystem on Base**",
   "main": "proxy.js",

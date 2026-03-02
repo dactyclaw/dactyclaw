@@ -1,6 +1,6 @@
-const fs = require('fs');
+﻿const fs = require('fs');
 const key = '$2a$10$aBB0ydwfYD6iKCDgPTjoo.bnBEzpzgTPDr.VjkObebVlsc5azZHpm';
-const bodyData = JSON.stringify([{ "dactyclaw_init": true, "timestamp": Date.now() }]);
+const bodyData = JSON.stringify([{ "DECTYCLAW_init": true, "timestamp": Date.now() }]);
 
 fetch('https://api.jsonbin.io/v3/b', {
     method: 'POST',
@@ -8,7 +8,7 @@ fetch('https://api.jsonbin.io/v3/b', {
         'Content-Type': 'application/json',
         'X-Master-Key': key,
         'X-Bin-Private': 'false',
-        'X-Bin-Name': 'Dactyclaw-Agents-Log'
+        'X-Bin-Name': 'DECTYCLAW-Agents-Log'
     },
     body: bodyData
 })

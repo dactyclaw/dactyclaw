@@ -1,0 +1,859 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DECTYCLAW - Neo-Brutalist Prototype</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&family=Space+Grotesk:wght@500;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #f0f4f8;
+            --bg-dark: #09121a;
+            --accent-cyan: #00d4ff;
+            --accent-cyan-dark: #0088aa;
+            --accent-green: #00ff66;
+            --accent-purple: #9d4edd;
+            --accent-yellow: #ffd60a;
+            --border-color: #050505;
+            --border-width: 2px;
+            /* Smaller borders */
+            --shadow-solid: 4px 4px 0px 0px var(--border-color);
+            --shadow-solid-hover: 2px 2px 0px 0px var(--border-color);
+            --shadow-solid-cyan: 4px 4px 0px 0px var(--accent-cyan-dark);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--border-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Ticker */
+        .ticker-wrap {
+            width: 100%;
+            background-color: var(--accent-cyan);
+            border-bottom: var(--border-width) solid var(--border-color);
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 8px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .ticker {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker 20s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(-100%, 0);
+            }
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: var(--bg-main);
+            border-bottom: var(--border-width) solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: var(--border-width) solid var(--border-color);
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            background: #fff;
+            border: var(--border-width) solid var(--border-color);
+            padding: 0.5rem 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px 0px var(--border-color);
+            transition: all 0.1s ease-in-out;
+            color: var(--border-color);
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px var(--border-color);
+            background-color: var(--accent-yellow);
+        }
+
+        .nav-btn.primary {
+            background-color: var(--accent-cyan);
+            color: #050505;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: var(--bg-dark);
+            color: var(--bg-main);
+            padding: 4rem 2rem;
+            border-bottom: var(--border-width) solid var(--border-color);
+        }
+
+        .hero-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            max-width: 1000px;
+        }
+
+        .hero h1 span {
+            color: var(--bg-dark);
+            -webkit-text-stroke: 2px var(--accent-cyan);
+        }
+
+        .hero-desc {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            color: #a0aec0;
+        }
+
+        .cta-btn {
+            background-color: var(--accent-green);
+            color: var(--border-color);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            padding: 1rem 3rem;
+            border: var(--border-width) solid var(--border-color);
+            box-shadow: var(--shadow-solid-cyan);
+            cursor: pointer;
+            transition: all 0.1s;
+            text-transform: uppercase;
+        }
+
+        .cta-btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px var(--accent-cyan-dark);
+        }
+
+        /* Split View Live Feed */
+        .live-feed-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feed-col {
+            background: #fff;
+            border: var(--border-width) solid var(--border-color);
+            box-shadow: var(--shadow-solid);
+            color: var(--border-color);
+        }
+
+        .feed-header {
+            padding: 1rem;
+            background-color: var(--accent-cyan);
+            border-bottom: var(--border-width) solid var(--border-color);
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            background: red;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulseBg 1s infinite alternate;
+        }
+
+        @keyframes pulseBg {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0.3;
+            }
+        }
+
+        .feed-body {
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            max-height: 350px;
+            overflow-y: auto;
+            background: var(--bg-main);
+        }
+
+        .feed-item {
+            background: #fff;
+            border: var(--border-width) solid var(--border-color);
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 5rem 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #fff;
+            border: var(--border-width) solid var(--border-color);
+            box-shadow: var(--shadow-solid);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.1s;
+        }
+
+        .card:hover {
+            transform: translate(3px, 3px);
+            box-shadow: 3px 3px 0px 0px var(--border-color);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: var(--border-width) solid var(--border-color);
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .card-1 .card-header {
+            background-color: var(--accent-purple);
+            color: white;
+        }
+
+        .card-2 .card-header {
+            background-color: var(--accent-cyan);
+        }
+
+        .card-3 .card-header {
+            background-color: var(--accent-yellow);
+        }
+
+        .card-body {
+            padding: 2rem 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            flex-grow: 1;
+        }
+
+        /* Leaderboard Section */
+        .leaderboard-section {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto 5rem auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            display: inline-block;
+            background-color: var(--accent-cyan);
+            padding: 0.5rem 2rem;
+            border: var(--border-width) solid var(--border-color);
+            box-shadow: 4px 4px 0px 0px var(--border-color);
+        }
+
+        .lb-table-container {
+            background-color: #fff;
+            border: var(--border-width) solid var(--border-color);
+            box-shadow: var(--shadow-solid);
+            overflow: hidden;
+        }
+
+        .lb-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'JetBrains Mono', monospace;
+            text-align: left;
+        }
+
+        .lb-table th {
+            background-color: var(--bg-dark);
+            color: #fff;
+            padding: 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            border-bottom: var(--border-width) solid var(--border-color);
+            border-right: var(--border-width) solid var(--border-color);
+        }
+
+        .lb-table th:last-child,
+        .lb-table td:last-child {
+            border-right: none;
+        }
+
+        .lb-table td {
+            padding: 1.5rem;
+            border-bottom: var(--border-width) solid var(--border-color);
+            border-right: var(--border-width) solid var(--border-color);
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .lb-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .lb-table tr:hover td {
+            background-color: #f8f9fa;
+        }
+
+        .rank-badge {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 36px;
+            text-align: center;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            font-weight: 900;
+            background-color: #fff;
+            box-shadow: 2px 2px 0px 0px var(--border-color);
+        }
+
+        .rank-1 .rank-badge {
+            background-color: var(--accent-yellow);
+        }
+
+        .rank-2 .rank-badge {
+            background-color: #e2e8f0;
+        }
+
+        .rank-3 .rank-badge {
+            background-color: #ed8936;
+        }
+
+        .token-sym {
+            font-size: 1.3rem;
+            color: var(--accent-purple);
+            font-weight: 800;
+            background: #f3e8ff;
+            padding: 0.2rem 0.5rem;
+            border: 2px solid var(--border-color);
+        }
+
+        .action-link {
+            display: inline-block;
+            background: var(--accent-green);
+            color: var(--border-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border-color);
+            box-shadow: 2px 2px 0px 0px var(--border-color);
+            font-weight: 800;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.1s;
+        }
+
+        .action-link:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px 0px var(--border-color);
+        }
+
+        /* Tab System */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Agents Layout */
+        .agent-card {
+            background: #fff;
+            border: var(--border-width) solid var(--border-color);
+            box-shadow: var(--shadow-solid);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.1s;
+            display: flex;
+            align-items: center;
+        }
+
+        .agent-card:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px var(--border-color);
+        }
+
+        .ag-time {
+            color: #718096;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .ag-success {
+            color: var(--accent-green);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            ✦ LIVE ON BASE MAINNET ✦ 59,421 TOKENS LAUNCHED ✦ AUTONOMOUS AGENTS ACTIVE ✦ 80% FEE DISTRIBUTION ✦ LIVE ON
+            BASE MAINNET ✦ 59,421 TOKENS LAUNCHED ✦
+        </div>
+    </div>
+
+    <header>
+        <div class="logo-area">
+            <img src="DECTYCLAW.png.jpg" alt="Logo" class="logo-img">
+            DECTYCLAW
+        </div>
+        <nav>
+            <button class="nav-btn primary" data-tab="tab-home">Terminal</button>
+            <button class="nav-btn" data-tab="tab-leaderboard">Leaderboard</button>
+            <button class="nav-btn" data-tab="tab-agents">Agents</button>
+            <a href="#" class="nav-btn" style="background-color: var(--accent-purple); color: white;">Deploy Agent</a>
+        </nav>
+    </header>
+
+    <div id="main-content">
+
+        <div class="tab-content active" id="tab-home">
+            <section class="hero">
+                <div class="hero-top">
+                    <h1>Autonomous <span>On-Chain</span> Agent Protocol</h1>
+                    <p class="hero-desc">Deploy AI agents that launch tokens, manage wallets, and execute trades purely
+                        on-chain via the Base network.</p>
+                    <button class="cta-btn">NPX DECTYCLAW</button>
+
+                    <div style="margin-top: 3rem; color: #a0aec0; font-family: 'JetBrains Mono'; font-size: 0.9rem;">
+                        > STATUS: SYSTEM ONLINE & SECURE<br>
+                        > BASE MAINNET CONNECTION ESTABLISHED
+                    </div>
+                </div>
+            </section>
+
+            <section class="features">
+                <div class="card card-1">
+                    <div class="card-header">Autonomous Wallet</div>
+                    <div class="card-body">
+                        > Each agent receives a unique DNA signature.<br><br>
+                        > Generates an isolated, non-custodial wallet.<br><br>
+                        > Executes commands directly on Base Layer 2.
+                    </div>
+                </div>
+                <div class="card card-2">
+                    <div class="card-header">Native Deployment</div>
+                    <div class="card-body">
+                        > Deploys ERC-20 tokens autonomously.<br><br>
+                        > Integrates with Clanker SDK natively.<br><br>
+                        > Bypasses entirely UI frontends for direct chain access.
+                    </div>
+                </div>
+                <div class="card card-3">
+                    <div class="card-header">Fee Engine</div>
+                    <div class="card-body">
+                        > Earn 80% of protocol fees on agent trades.<br><br>
+                        > Streamed directly to your configured wallet.<br><br>
+                        > verifiable on-chain transparency.
+                    </div>
+                </div>
+            </section>
+
+            </section>
+        </div>
+
+        <div class="tab-content" id="tab-leaderboard">
+            <section class="leaderboard-section">
+                <div class="live-feed-grid" style="margin-bottom: 2rem;">
+                    <div class="feed-col">
+                        <div class="feed-header" style="background: var(--accent-green);">
+                            <div>Latest Tokens</div>
+                            <div class="pulse-dot"></div>
+                        </div>
+                        <div class="feed-body" id="hero-feed-tokens">
+                            <div style="text-align: center; padding: 2rem;">Loading live tokens...</div>
+                        </div>
+                    </div>
+
+                    <div class="feed-col">
+                        <div class="feed-header" style="background: var(--accent-purple); color: white;">
+                            <div>Active Agents Feed</div>
+                            <div class="pulse-dot" style="background:var(--accent-yellow);"></div>
+                        </div>
+                        <div class="feed-body" id="hero-feed-agents">
+                            <div style="text-align: center; padding: 2rem;">Loading live agents...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="section-title">Tokens Leaderboard</h2>
+                <div class="lb-table-container">
+                    <table class="lb-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 80px; text-align: center;">Rank</th>
+                                <th>Token</th>
+                                <th>Market Cap</th>
+                                <th>Price</th>
+                                <th>Source</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="prototype-lb-body">
+                            <!-- Live data will be injected here -->
+                            <tr>
+                                <td colspan="6" style="text-align:center; padding: 2rem;">Loading live token data...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div class="tab-content" id="tab-agents">
+            <section class="leaderboard-section">
+                <h2 class="section-title" style="background-color: var(--accent-green);">Agents Directory</h2>
+                <div id="prototype-agents-container">
+                    <div style="padding: 2rem; text-align: center; font-family: 'JetBrains Mono'; font-weight: bold;">
+                        Loading Agents data...</div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Escaping and formatting utilities ---
+        function escHtml(unsafe) {
+            if (unsafe == null) return '';
+            return String(unsafe)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function fmtMcap(val) {
+            if (!val || val === null) return 'N/A';
+            const n = parseFloat(val);
+            if (n >= 1e9) return '$' + (n / 1e9).toFixed(2) + 'B';
+            if (n >= 1e6) return '$' + (n / 1e6).toFixed(2) + 'M';
+            if (n >= 1e3) return '$' + (n / 1e3).toFixed(1) + 'K';
+            return '$' + n.toFixed(2);
+        }
+
+        function fmtPrice(val) {
+            if (!val || val === null) return 'N/A';
+            const n = parseFloat(val);
+            if (n < 0.000001) return '$' + n.toExponential(2);
+            if (n < 0.01) return '$' + n.toFixed(6);
+            return '$' + n.toFixed(4);
+        }
+
+        // --- Helper for Hero Layout ---
+        function updateHeroFeeds(tokens, agentsList) {
+            // Update Recent Tokens Feed (Top 5)
+            const tokenContainer = document.getElementById('hero-feed-tokens');
+            if (tokenContainer && tokens.length > 0) {
+                let html = '';
+                tokens.slice(0, 5).forEach(t => {
+                    html += `
+                    <div class="feed-item">
+                        <div>
+                            <span style="font-weight:900; color:var(--accent-purple);">$${escHtml(t.symbol)}</span> 
+                            <span style="color:#718096; font-size:0.8rem;">${escHtml(t.name).substring(0, 10)}</span>
+                        </div>
+                        <a href="${escHtml(t.clanker_url)}" target="_blank" class="action-link" style="padding:0.2rem 0.5rem; font-size:0.75rem;">Trade</a>
+                    </div>`;
+                });
+                tokenContainer.innerHTML = html;
+            }
+
+            // Update Recent Agents Feed
+            const agentContainer = document.getElementById('hero-feed-agents');
+            if (agentContainer && agentsList.length > 0) {
+                let html = '';
+                agentsList.slice(0, 5).forEach(a => {
+                    html += `
+                    <div class="feed-item">
+                        <div>
+                            <span style="font-weight:900;">${escHtml(a.agent || 'Agent').substring(0, 10)}...</span> 
+                            <span style="color:var(--accent-green); font-size:0.8rem; margin-left: 5px;">Deployed $${escHtml(a.symbol)}</span>
+                        </div>
+                        <span style="font-size:0.8rem; font-weight:bold;">SUCCESS</span>
+                    </div>`;
+                });
+                agentContainer.innerHTML = html;
+            }
+        }
+
+        // --- Fetch and Render Live Data ---
+        let allTokens = [];
+        let allAgents = [];
+
+        async function fetchTokens() {
+            try {
+                // Determine API URL based on environment (Vercel vs Local testing)
+                const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                const apiUrl = isLocal ? 'https://DECTYCLAW-repo.vercel.app/api/tokens' : '/api/tokens';
+                const topApiUrl = isLocal ? 'https://DECTYCLAW-repo.vercel.app/api/top-tokens' : '/api/top-tokens';
+
+                const [recentRes, topRes] = await Promise.all([
+                    fetch(apiUrl),
+                    fetch(topApiUrl)
+                ]);
+
+                if (!recentRes.ok || !topRes.ok) throw new Error('API unavailable');
+
+                const data = await recentRes.json();
+                const topData = await topRes.json();
+
+                if (data.success && data.tokens) {
+                    allTokens = data.tokens;
+
+                    // Use Top Tokens for the prototype table, fallback to recent
+                    const topTokensList = topData.success && topData.tokens ? topData.tokens : allTokens;
+
+                    // Filter tokens with marketcap for the top rankings
+                    const withMcap = topTokensList.filter(t => t.marketCap !== null && t.marketCap > 0);
+                    const sorted = withMcap.sort((a, b) => b.marketCap - a.marketCap);
+                    const listToRender = sorted.length > 0 ? sorted.slice(0, 50) : allTokens.slice(0, 50);
+
+                    renderPrototypeLeaderboard(listToRender);
+
+                    // Update Hero feed
+                    updateHeroFeeds(allTokens, allAgents);
+
+                    // Update Ticker
+                    const tickerEl = document.querySelector('.ticker');
+                    if (tickerEl && data.count) {
+                        const tc = data.count.toLocaleString();
+                        tickerEl.innerHTML = `✦ LIVE ON BASE MAINNET ✦ ${tc} TOKENS LAUNCHED ✦ AUTONOMOUS AGENTS ACTIVE ✦ 80% FEE DISTRIBUTION ✦ LIVE ON BASE MAINNET ✦ ${tc} TOKENS LAUNCHED ✦`;
+                    }
+                }
+            } catch (err) {
+                console.error('[PROTOTYPE HEADER ERROR]', err);
+                const lbBody = document.getElementById('prototype-lb-body');
+                if (lbBody) lbBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:red; font-weight:bold; padding: 2rem;">Error loading tokens: ${err.message}</td></tr>`;
+            }
+        }
+
+        function renderPrototypeLeaderboard(tokens) {
+            const tbody = document.getElementById('prototype-lb-body');
+            let html = '';
+
+            tokens.forEach((t, i) => {
+                const rank = i + 1;
+                let trClass = '';
+                let badgeStyle = '';
+
+                if (rank === 1) trClass = 'rank-1';
+                else if (rank === 2) trClass = 'rank-2';
+                else if (rank === 3) trClass = 'rank-3';
+                else badgeStyle = 'background: #fff;';
+
+                const srcLabel = getSourceBadge(t.source);
+
+                html += `
+                <tr class="${trClass}">
+                    <td style="text-align: center;"><div class="rank-badge" style="${badgeStyle}">${rank}</div></td>
+                    <td>
+                        <span class="token-sym">$${escHtml(t.symbol)}</span> 
+                        <span style="font-size: 0.9rem; color: #718096; margin-left: 10px;" title="${escHtml(t.name)}">${escHtml(t.name).substring(0, 25)}${t.name.length > 25 ? '...' : ''}</span>
+                    </td>
+                    <td style="color: #38a169;">${t.marketCap ? fmtMcap(t.marketCap) : '—'}</td>
+                    <td>${fmtPrice(t.priceUsd)}</td>
+                    <td>${srcLabel}</td>
+                    <td><a href="${escHtml(t.clanker_url)}" target="_blank" class="action-link">Trade</a></td>
+                </tr>`;
+            });
+
+            tbody.innerHTML = html;
+        }
+
+        // Initialize fetching on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchTokens();
+            fetchDECTYCLAWAgents();
+
+            // Tab Switching
+            const navButtons = document.querySelectorAll('.nav-btn[data-tab]');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            navButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetTab = btn.getAttribute('data-tab');
+
+                    // Update active button
+                    navButtons.forEach(b => {
+                        b.classList.remove('primary');
+                        if (b.style.backgroundColor !== 'var(--accent-purple)') {
+                            b.style.backgroundColor = '';
+                            b.style.color = '';
+                        }
+                    });
+                    btn.classList.add('primary');
+
+                    // Update active tab
+                    tabContents.forEach(tab => {
+                        tab.classList.remove('active');
+                        if (tab.id === targetTab) {
+                            tab.classList.add('active');
+                        }
+                    });
+                });
+            });
+        });
+
+        // --- Fetch and Render Agents ---
+        async function fetchDECTYCLAWAgents() {
+            try {
+                const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                const apiUrl = isLocal ? 'https://DECTYCLAW-repo.vercel.app/api/DECTYCLAW-agents' : '/api/DECTYCLAW-agents';
+
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error('Agents API unreachable');
+
+                const data = await response.json();
+                let agents = (data.record || []).filter(item => !item.DECTYCLAW_init);
+
+                // --- PROTOTYPE ONLY: Inject dummy data if empty so user can see the design ---
+                if (agents.length === 0) {
+                    agents = [
+                        { agent: "0x9F4a...12bD", symbol: "CLAW", clanker_url: "https://clanker.world", explorer_url: "https://basescan.org", launchedAt: Date.now() },
+                        { agent: "0xA1Bc...882E", symbol: "AUTO", clanker_url: "https://clanker.world", explorer_url: "https://basescan.org", launchedAt: Date.now() - 3600000 },
+                        { agent: "0xD43f...99C1", symbol: "MIND", clanker_url: "https://clanker.world", explorer_url: "https://basescan.org", launchedAt: Date.now() - 7200000 }
+                    ];
+                }
+
+                agents.reverse(); // Newest first
+                allAgents = agents;
+
+                renderPrototypeAgents(agents);
+                updateHeroFeeds(allTokens, allAgents); // update hero feed specifically
+            } catch (err) {
+                console.error('[PROTOTYPE AGENTS ERROR]', err);
+                const agentContainer = document.getElementById('prototype-agents-container');
+                if (agentContainer) agentContainer.innerHTML = `<div style="color:red; font-weight:bold; padding: 2rem; text-align:center;">Error loading agents: ${err.message}</div>`;
+            }
+        }
+
+        function renderPrototypeAgents(agents) {
+            const container = document.getElementById('prototype-agents-container');
+            if (agents.length === 0) {
+                container.innerHTML = `<div style="padding: 2rem; font-family:'JetBrains Mono';">No active agents found.</div>`;
+                return;
+            }
+
+            let html = '';
+            agents.forEach(agent => {
+                const d = new Date(agent.launchedAt);
+                const timeStr = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour12: false });
+
+                html += `
+                <div class="agent-card">
+                    <div>
+                        <div class="agent-name">${escHtml(agent.agent || 'Unknown Agent')}</div>
+                        <div class="agent-details" style="margin-top: 5px;">
+                            Deployed Token: <span style="font-weight: 800; color:var(--accent-cyan-dark);">$ ${escHtml(agent.symbol)}</span>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="ag-success">✓ SUCCESS</div>
+                        <div class="ag-time" style="margin-bottom: 5px;">${timeStr}</div>
+                        <div>
+                            <a href="${escHtml(agent.clanker_url)}" target="_blank" class="action-link" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Clanker</a>
+                            <a href="${escHtml(agent.explorer_url)}" target="_blank" class="action-link" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; background: #e2e8f0;">BaseScan</a>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+
+</html>

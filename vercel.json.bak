@@ -1,4 +1,4 @@
-{
+﻿{
   "rewrites": [
     {
       "source": "/api/tokens",
@@ -9,8 +9,8 @@
       "destination": "/api/top-tokens"
     },
     {
-      "source": "/api/dactyclaw-agents",
-      "destination": "/api/dactyclaw-agents"
+      "source": "/api/DECTYCLAW-agents",
+      "destination": "/api/DECTYCLAW-agents"
     },
     {
       "source": "/(.*)",

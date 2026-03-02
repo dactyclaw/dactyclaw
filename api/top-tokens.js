@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+﻿export default async function handler(req, res) {
     // Always append prices=1, sort=hot, and limit=10 to the request
     const url = new URL('https://clawn.ch/api/tokens?prices=1&sort=hot&limit=10');
 
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
     try {
         const response = await fetch(url.toString(), {
-            headers: { 'User-Agent': 'dactyclaw/2.2' }
+            headers: { 'User-Agent': 'DECTYCLAW/2.2' }
         });
         const data = await response.json();
 

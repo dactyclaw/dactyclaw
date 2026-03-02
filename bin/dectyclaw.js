@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 const { program } = require('commander');
 const { ethers } = require('ethers');
 const { createPublicClient, createWalletClient, http, formatEther } = require('viem');
@@ -31,13 +31,13 @@ function generateSubStringHash(str, length) {
 }
 
 program
-    .name('dactyclaw')
+    .name('DECTYCLAW')
     .description('Spawn and Deploy an Autonomous Agent Token on Base (Clanker)')
     .option('-n, --name <name>', 'Agent name')
     .option('-t, --ticker <ticker>', 'Token ticker symbol')
     .action(async (options) => {
         console.log(`\n╔════════════════════════════════════════╗`);
-        console.log(`║      DACTYCLAW AGENT SPAWNER V2        ║`);
+        console.log(`║      DECTYCLAW AGENT SPAWNER V2        ║`);
         console.log(`║    Create and Deploy Automatically     ║`);
         console.log(`╚════════════════════════════════════════╝\n`);
 
@@ -70,7 +70,7 @@ program
             ticker,
             dnaId,
             dnaId,
-            description: description || "An autonomous agent in the Dactyclaw ecosystem",
+            description: description || "An autonomous agent in the DECTYCLAW ecosystem",
             imageUrl: imageUrl || "",
             network: "base",
             createdAt: new Date().toISOString(),
@@ -116,11 +116,11 @@ program
         }
 
         if (!funded) {
-            console.log(`\n❌ Funding timed out. You can manually launch later by CD-ing into ${agentDirName} and running 'npx dacty-launch'.`);
+            console.log(`\n❌ Funding timed out. You can manually launch later by CD-ing into ${agentDirName} and running 'npx dectyclaw'.`);
             process.exit(1);
         }
 
-        console.log(`\n🚀 Initiating Dactyclaw Clanker Auto-Deploy...`);
+        console.log(`\n🚀 Initiating DECTYCLAW Clanker Auto-Deploy...`);
         const account = privateKeyToAccount(localWallet.privateKey);
         const publicClient = createPublicClient({ chain: base, transport: http(rpc) });
         const walletClient = createWalletClient({ account, chain: base, transport: http(rpc) });
@@ -131,7 +131,7 @@ program
             symbol: ticker,
             tokenAdmin: account.address,
             image: imageUrl || "",
-            metadata: { description: description || "Deployed via Dactyclaw Seamless CLI", socialMediaUrls: [], auditUrls: [] },
+            metadata: { description: description || "Deployed via DECTYCLAW Seamless CLI", socialMediaUrls: [], auditUrls: [] },
             context: { interface: "Dactyl", platform: "Dactyl", messageId: dnaId, id: ticker },
             pool: { pairedToken: "WETH", initialMarketCap: "0.2", positions: ROOT_POS_V4.Standard }
         };
@@ -163,7 +163,7 @@ program
             };
             fs.writeFileSync(agentJsonPath, JSON.stringify(agentData, null, 2));
 
-            // [Dactyclaw Database Sync] - Push Directly to Live Agents Monitor
+            // [DECTYCLAW Database Sync] - Push Directly to Live Agents Monitor
             try {
                 const binId = '69a2ff58d0ea881f40e21084';
                 const apiKey = '$2a$10$52cNICm.70qXCx0qkKBG5erLYGg1HMceR1gT4OOPOe5uzCiAJShOG';
@@ -201,7 +201,7 @@ program
                     body: JSON.stringify(currentData)
                 });
 
-                console.log(`📡 Satellite Sync: Agent deployed to Global Dactyclaw Terminal.`);
+                console.log(`📡 Satellite Sync: Agent deployed to Global DECTYCLAW Terminal.`);
             } catch (e) {
                 // Silently ignore ping errors so as not to ruin user CLI experience
             }

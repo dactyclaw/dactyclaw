@@ -1,27 +1,26 @@
-{
-  "name": "dactyclaw",
-  "version": "1.6.2",
+﻿{
+  "name": "dectyclaw-agent",
+  "version": "1.0.0",
   "description": "**Agent Monitor & Deployer for Clawn Ecosystem on Base**",
   "main": "proxy.js",
   "bin": {
-    "dacty-create": "bin/dactyclaw.js",
-    "dactyclaw": "bin/dactyclaw.js"
+    "dectyclaw": "bin/dectyclaw.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dactyclaw/dactyclaw.git"
+    "url": "git+https://github.com/DECTYCLAW/DECTYCLAW.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/dactyclaw/dactyclaw/issues"
+    "url": "https://github.com/DECTYCLAW/DECTYCLAW/issues"
   },
-  "homepage": "https://github.com/dactyclaw/dactyclaw#readme",
+  "homepage": "https://github.com/DECTYCLAW/DECTYCLAW#readme",
   "dependencies": {
     "axios": "^1.13.5",
     "clanker-sdk": "^4.2.10",

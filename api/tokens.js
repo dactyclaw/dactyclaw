@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+﻿export default async function handler(req, res) {
   const url = new URL('https://clawn.ch/api/tokens');
   
   // Forward query params (offset, limit, etc.)
@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(url.toString(), {
-      headers: { 'User-Agent': 'dactyclaw/2.2' }
+      headers: { 'User-Agent': 'DECTYCLAW/2.2' }
     });
     const data = await response.json();
 

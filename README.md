@@ -1,5 +1,5 @@
-<p align="center">
-  <strong>DACTYCLAW</strong><br>
+﻿<p align="center">
+  <strong>DECTYCLAW</strong><br>
   <em>Autonomous On-Chain Agent Orchestration Protocol</em>
 </p>
 
@@ -7,11 +7,11 @@
 
 ## Introduction
 
-Dactyclaw is a fully autonomous, self-sustaining protocol designed to deploy, manage, and monitor AI-powered on-chain agents on the **Base network**. It combines a powerful command-line interface with a modern web dashboard, enabling developers and operators to launch ERC-20 tokens through [Clanker](https://clanker.world) with zero manual intervention after initialization.
+DECTYCLAW is a fully autonomous, self-sustaining protocol designed to deploy, manage, and monitor AI-powered on-chain agents on the **Base network**. It combines a powerful command-line interface with a modern web dashboard, enabling developers and operators to launch ERC-20 tokens through [Clanker](https://clanker.world) with zero manual intervention after initialization.
 
-Unlike traditional token launchers that require step-by-step user interaction, Dactyclaw operates as a continuous orchestration process. Once started, it autonomously generates agent identities, provisions Ethereum wallets, monitors funding status, and executes smart contract deployments—all within a single terminal session.
+Unlike traditional token launchers that require step-by-step user interaction, DECTYCLAW operates as a continuous orchestration process. Once started, it autonomously generates agent identities, provisions Ethereum wallets, monitors funding status, and executes smart contract deployments—all within a single terminal session.
 
-Every agent deployed through Dactyclaw is automatically tracked via an independent serverless database, ensuring complete data sovereignty without reliance on third-party infrastructure.
+Every agent deployed through DECTYCLAW is automatically tracked via an independent serverless database, ensuring complete data sovereignty without reliance on third-party infrastructure.
 
 ---
 
@@ -25,15 +25,15 @@ Every agent deployed through Dactyclaw is automatically tracked via an independe
 
 ### Installation
 
-No installation is required. Dactyclaw runs directly via `npx`:
+No installation is required. DECTYCLAW runs directly via `npx`:
 
 ```bash
-npx dactyclaw
+npx DECTYCLAW
 ```
 
 ### What Happens Next
 
-Once the process starts, Dactyclaw will:
+Once the process starts, DECTYCLAW will:
 
 1. **Generate Agent Identity** — Creates a unique DNA signature and agent profile.
 2. **Provision Wallet** — Generates a new Ethereum keypair for the agent.
@@ -49,7 +49,7 @@ The entire process is non-interactive after the initial command execution.
 
 | Feature | Description |
 |---|---|
-| **One-Command Deployment** | Launch the full orchestration process with a single `npx dactyclaw` command. |
+| **One-Command Deployment** | Launch the full orchestration process with a single `npx DECTYCLAW` command. |
 | **Autonomous Agent Lifecycle** | Automatic DNA generation, wallet provisioning, balance monitoring, and contract deployment. |
 | **Base Mainnet Native** | Direct ERC-20 token deployment on Base via Clanker smart contracts. |
 | **Serverless Agent Tracking** | All deployed agents are logged to an independent serverless database in real-time. |
@@ -60,7 +60,7 @@ The entire process is non-interactive after the initial command execution.
 
 ## Architecture
 
-Dactyclaw follows a modular architecture consisting of three primary layers:
+DECTYCLAW follows a modular architecture consisting of three primary layers:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -99,7 +99,7 @@ Dactyclaw follows a modular architecture consisting of three primary layers:
 ### Primary Command
 
 ```bash
-npx dactyclaw [options]
+npx DECTYCLAW [options]
 ```
 
 ### Options
@@ -114,21 +114,21 @@ npx dactyclaw [options]
 ### Example
 
 ```bash
-npx dactyclaw --name "SentinelAlpha" --ticker "SNTL"
+npx DECTYCLAW --name "SentinelAlpha" --ticker "SNTL"
 ```
 
 ---
 
 ## Web Dashboard
 
-The Dactyclaw web interface is a fully responsive, terminal-themed dashboard built with vanilla HTML, CSS, and JavaScript. It provides real-time visibility into the protocol's operations.
+The DECTYCLAW web interface is a fully responsive, terminal-themed dashboard built with vanilla HTML, CSS, and JavaScript. It provides real-time visibility into the protocol's operations.
 
 ### Pages
 
 | Page | Description |
 |---|---|
 | **Home** | Protocol overview, feature highlights, and ecosystem statistics. |
-| **Agents** | Live feed of all tokens deployed through the Dactyclaw protocol, sourced from the independent serverless database. |
+| **Agents** | Live feed of all tokens deployed through the DECTYCLAW protocol, sourced from the independent serverless database. |
 | **Leaderboard** | Broader agent token network rankings with auto-refresh every 30 seconds. |
 | **Deploy** | Interactive documentation with deployment commands and configuration guides. |
 | **Docs** | Complete CLI reference, architecture documentation, and external resource links. |
@@ -141,17 +141,17 @@ The Dactyclaw web interface is a fully responsive, terminal-themed dashboard bui
 |---|---|---|
 | **Base Mainnet** | Live | ERC-20 |
 
-Dactyclaw is purpose-built for the Base network. All contract deployments, wallet provisioning, and balance monitoring operate exclusively on Base Mainnet through the Clanker deployment infrastructure.
+DECTYCLAW is purpose-built for the Base network. All contract deployments, wallet provisioning, and balance monitoring operate exclusively on Base Mainnet through the Clanker deployment infrastructure.
 
 ---
 
 ## Security
 
-Dactyclaw is designed with security as a first-class concern:
+DECTYCLAW is designed with security as a first-class concern:
 
 - **Local Key Storage** — All private keys and wallet credentials are generated and stored locally on your machine. They are never transmitted to external servers.
 - **Credential Isolation** — API keys and authentication tokens are managed through environment variables and are never committed to version control.
-- **Non-Custodial** — Dactyclaw does not hold, manage, or have access to user funds. Wallet interactions are executed directly on-chain.
+- **Non-Custodial** — DECTYCLAW does not hold, manage, or have access to user funds. Wallet interactions are executed directly on-chain.
 
 ---
 
@@ -171,8 +171,8 @@ Please ensure all commits follow the [Conventional Commits](https://www.conventi
 
 ## Resources
 
-- **Twitter (X):** [@dactyclaw](https://x.com/dactyclaw)
-- **GitHub:** [dactyclaw/dactyclaw](https://github.com/dactyclaw/dactyclaw)
+- **Twitter (X):** [@DECTYCLAW](https://x.com/DECTYCLAW)
+- **GitHub:** [DECTYCLAW/DECTYCLAW](https://github.com/DECTYCLAW/DECTYCLAW)
 - **Clanker:** [clanker.world](https://clanker.world)
 
 ---

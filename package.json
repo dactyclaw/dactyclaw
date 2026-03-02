@@ -1,13 +1,13 @@
 ﻿{
-  "name": "dectyclaw-agent",
-  "version": "1.0.0",
+  "name": "dectyclaw",
+  "version": "1.0.1",
   "description": "**Agent Monitor & Deployer for Clawn Ecosystem on Base**",
   "main": "proxy.js",
   "bin": {
     "dectyclaw": "bin/dectyclaw.js"
   },
   "scripts": {
-    "dev": "start node src/cors_proxy.js && npx -y http-server public -p 3000 -c-1",
+    "dev": "npx -y concurrently \"node src/cors_proxy.js\" \"npx -y http-server public -p 3000 -c-1\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 const { program } = require('commander');
 const { ethers } = require('ethers');
 const { createPublicClient, createWalletClient, http, formatEther } = require('viem');

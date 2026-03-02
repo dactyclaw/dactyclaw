@@ -501,7 +501,8 @@
     <header>
         <button class="nav-btn primary" data-tab="tab-home"
             style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border: var(--border-width) solid var(--border-color); background: #ffaa00; box-shadow: var(--shadow-solid); font-family: 'Space Grotesk', sans-serif; font-weight: 900; font-size: 1.2rem; cursor: pointer; color: var(--border-color);">
-            <img src="dectyclaw.png.jpg" alt="Logo" class="logo-img" style="border: 2px solid var(--border-color);">
+            <img src="assets/dectyclaw.png.jpg" alt="Logo" class="logo-img"
+                style="border: 2px solid var(--border-color);">
             DECTYCLAW
         </button>
         <nav>
@@ -759,7 +760,7 @@
 
                     <!-- Content -->
                     <div style="margin-top: 2rem; text-align: center;">
-                        <img src="dectyclaw.png.jpg" alt="DECTYCLAW Logo"
+                        <img src="assets/dectyclaw.png.jpg" alt="DECTYCLAW Logo"
                             style="width: 64px; height: 64px; border-radius: 50%; display: inline-block; margin-bottom: 2.5rem; box-shadow: 0 0 20px rgba(0,255,65,0.4); border: 2px solid var(--border-color); object-fit: cover;">
 
                         <h3
@@ -897,11 +898,13 @@
 
         async function fetchTokens() {
             try {
-                const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                const hostname = window.location.hostname;
+                const isLocal = hostname === 'localhost' || hostname === '127.0.0.1' || hostname.startsWith('192.168.') || hostname.startsWith('10.');
                 const ts = Date.now();
-                const apiUrl = isLocal ? `http://localhost:8091/api/tokens?prices=1&sort=recent&limit=15&_t=${ts}` : `https://clawn.ch/api/tokens?prices=1&sort=recent&limit=15&_t=${ts}`;
-                const topApiUrl = isLocal ? `http://localhost:8091/api/tokens?prices=1&sort=hot&limit=50&_t=${ts}` : `https://clawn.ch/api/tokens?prices=1&sort=hot&limit=50&_t=${ts}`;
-                const countApiUrl = isLocal ? `http://localhost:8091/api/count?_t=${ts}` : `https://clawn.ch/api/count?_t=${ts}`;
+                const proxyUrl = `http://${hostname}:8091`;
+                const apiUrl = isLocal ? `${proxyUrl}/api/tokens?prices=1&sort=recent&limit=15&_t=${ts}` : `https://clawn.ch/api/tokens?prices=1&sort=recent&limit=15&_t=${ts}`;
+                const topApiUrl = isLocal ? `${proxyUrl}/api/tokens?prices=1&sort=hot&limit=50&_t=${ts}` : `https://clawn.ch/api/tokens?prices=1&sort=hot&limit=50&_t=${ts}`;
+                const countApiUrl = isLocal ? `${proxyUrl}/api/count?_t=${ts}` : `https://clawn.ch/api/count?_t=${ts}`;
 
                 const [recentRes, topRes, countRes] = await Promise.all([
                     fetch(apiUrl),

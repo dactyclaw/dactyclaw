@@ -1801,12 +1801,6 @@
                     // Combine Top (Hot) Tokens and Recent Tokens so high-volume newcomers are found before official API indexing
                     const topTokensList = topData.success && topData.tokens ? [...topData.tokens] : [];
                     allTokens.forEach(rt => {
-                        // Special fix for API delay on specific new tokens (e.g. CONSCRUB) dropping null volume
-                        if (rt.symbol === 'CONSCRUB' && rt.volume24h == null) {
-                            rt.volume24h = 180000;
-                            rt.marketCap = 28000;
-                        }
-
                         if (!topTokensList.find(tt => tt.symbol === rt.symbol)) {
                             topTokensList.push(rt);
                         }

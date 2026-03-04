@@ -1798,8 +1798,13 @@
                 if (data.success && data.tokens) {
                     allTokens = data.tokens;
 
-                    // Use Top Tokens for the leaderboard prototype table, fallback to recent
-                    const topTokensList = topData.success && topData.tokens ? topData.tokens : allTokens;
+                    // Combine Top (Hot) Tokens and Recent Tokens so high-volume newcomers are found before official API indexing
+                    const topTokensList = topData.success && topData.tokens ? [...topData.tokens] : [];
+                    allTokens.forEach(rt => {
+                        if (!topTokensList.find(tt => tt.symbol === rt.symbol)) {
+                            topTokensList.push(rt);
+                        }
+                    });
 
                     // Filter tokens ensuring they are somewhat related to our ecosystem (Clawncher or Bankr partnership)
                     const clawncherTokens = topTokensList.filter(t => t.source && (t.source.toString().toUpperCase().includes('CLAWNCHER') || t.source.toString().toUpperCase().includes('BANKR')));

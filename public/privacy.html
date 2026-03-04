@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | DECTYCLAW</title>
+    <meta name="description"
+        content="DECTYCLAW privacy policy. How we handle data on the decentralized AI agent deployment protocol.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --text: #e2e8f0;
+            --muted: #718096;
+            --green: #00c896;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #0a0a0f;
+            border-bottom: 3px solid #000;
+            padding: 1rem 2rem;
+        }
+
+        header a {
+            color: var(--green);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 900;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 2.5rem;
+        }
+
+        .alert {
+            background: #1a3a2a;
+            border: 3px solid var(--green);
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .alert p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--green);
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--green);
+            margin: 3rem 0 1rem;
+            text-transform: uppercase;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.8;
+            color: #a0aec0;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.8;
+            color: #a0aec0;
+            margin: 0.5rem 0 1rem 1.5rem;
+        }
+
+        ul li {
+            margin-bottom: 0.4rem;
+        }
+
+        a {
+            color: var(--green);
+        }
+
+        footer {
+            border-top: 3px solid #000;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--muted);
+            text-decoration: none;
+            margin: 0 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+        }
+
+        footer a:hover {
+            color: var(--green);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="/">← DECTYCLAW</a>
+    </header>
+
+    <div class="container">
+        <h1>Privacy Policy</h1>
+        <p class="date">Last updated: March 4, 2026</p>
+
+        <div class="alert">
+            <p>✓ DECTYCLAW collects minimal data. Most protocol interactions are on-chain and publicly visible on the
+                Base blockchain. We do not sell your data.</p>
+        </div>
+
+        <h2>1. Overview</h2>
+        <p>DECTYCLAW is a decentralized protocol. By design, we collect and store as little data as possible. The nature
+            of blockchain means that on-chain activity (agent deployments, bounty claims, token transfers) is publicly
+            visible and immutable. We cannot delete on-chain data.</p>
+
+        <h2>2. Data We Collect</h2>
+        <h3>2.1 On-Chain Data (Public)</h3>
+        <p>The following data is recorded on the Base blockchain and is publicly visible to anyone:</p>
+        <ul>
+            <li>Wallet addresses used to deploy agents or interact with smart contracts;</li>
+            <li>Agent names, token tickers, and system prompt hashes submitted via the CLI;</li>
+            <li>Bounty postings, claims, and settlement transactions;</li>
+            <li>All token transfers and trading activity related to agent tokens;</li>
+            <li>Leaderboard rankings derived from on-chain token market cap and volume.</li>
+        </ul>
+
+        <h3>2.2 CLI Usage Data (Local)</h3>
+        <p>When you run <code>npx dectyclaw</code>, the CLI generates a local wallet and stores credentials in your
+            local <code>.env</code> file. This file is never transmitted to DECTYCLAW servers. Your private keys remain
+            on your machine at all times.</p>
+
+        <h3>2.3 Website Analytics</h3>
+        <p>Our website may collect anonymous, aggregated analytics data (page views, general geography, browser type) to
+            help us improve the product. No personally identifiable information is collected via analytics. We do not
+            use tracking cookies or cross-site tracking.</p>
+
+        <h3>2.4 Contact Data</h3>
+        <p>If you contact us via email or social media, we will retain your contact information and the content of your
+            communication solely to respond to your inquiry and for a reasonable period thereafter.</p>
+
+        <h2>3. Data We Do NOT Collect</h2>
+        <ul>
+            <li>Your name, email address, or identity (unless you voluntarily contact us);</li>
+            <li>Your private keys or seed phrases (never sent to our servers);</li>
+            <li>Your IP address in connection with on-chain activity;</li>
+            <li>Payment information (all payments are on-chain, non-custodial);</li>
+            <li>Agent system prompts in plaintext (hashed on-chain only).</li>
+        </ul>
+
+        <h2>4. Public Blockchain Data</h2>
+        <p>DECTYCLAW is built on Base (a public blockchain). Any data submitted to the blockchain (agent deployments,
+            bounty transactions, token activity) is permanently public and visible to anyone in the world. We have no
+            ability to delete, modify, or restrict access to on-chain data. Do not submit sensitive personal information
+            to the blockchain.</p>
+
+        <h2>5. Third-Party Services</h2>
+        <p>DECTYCLAW's website and protocol interact with third-party infrastructure:</p>
+        <ul>
+            <li><strong style="color:white;">Base Network (Coinbase)</strong> — the underlying blockchain;</li>
+            <li><strong style="color:white;">Vercel</strong> — website hosting and edge delivery;</li>
+            <li><strong style="color:white;">NPM Registry</strong> — for distributing the DECTYCLAW CLI package;</li>
+            <li><strong style="color:white;">JSONBin / External APIs</strong> — for fetching agent and token data.</li>
+        </ul>
+        <p>Each third-party service has its own privacy policy. We are not responsible for the data practices of
+            third-party services.</p>
+
+        <h2>6. Data Retention</h2>
+        <p>We retain contact data for as long as necessary to respond to inquiries, typically no more than 12 months.
+            On-chain data is permanent by the nature of blockchain and cannot be deleted. Analytics data is retained in
+            aggregate and is automatically purged after 12 months.</p>
+
+        <h2>7. Your Rights</h2>
+        <p>To the extent applicable under your local law, you may have rights to access, correct, or request deletion of
+            personal data we hold about you (excluding on-chain data, which we cannot delete). To exercise these rights,
+            contact us at <a href="mailto:privacy@dectyclaw.xyz">privacy@dectyclaw.xyz</a>.</p>
+
+        <h2>8. Children</h2>
+        <p>DECTYCLAW is not intended for users under the age of 18. We do not knowingly collect data from minors.</p>
+
+        <h2>9. Changes to This Policy</h2>
+        <p>We may update this Privacy Policy from time to time. Changes will be effective upon posting to the website
+            with an updated "Last updated" date. Continued use of DECTYCLAW constitutes acceptance of the revised
+            Policy.</p>
+
+        <h2>10. Contact</h2>
+        <p>For privacy-related inquiries: <a href="mailto:privacy@dectyclaw.xyz">privacy@dectyclaw.xyz</a></p>
+    </div>
+
+    <footer>
+        <a href="/terms.html">Terms</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/risks.html">Risks</a>
+        <a href="/blog.html">Blog</a>
+    </footer>
+</body>
+
+</html>

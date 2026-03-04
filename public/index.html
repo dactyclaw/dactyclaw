@@ -1801,8 +1801,8 @@
                     // Use Top Tokens for the leaderboard prototype table, fallback to recent
                     const topTokensList = topData.success && topData.tokens ? topData.tokens : allTokens;
 
-                    // Filter tokens ensuring they are somewhat related to our ecosystem
-                    const clawncherTokens = topTokensList.filter(t => t.source && t.source.toString().toUpperCase().includes('CLAWNCHER'));
+                    // Filter tokens ensuring they are somewhat related to our ecosystem (Clawncher or Bankr partnership)
+                    const clawncherTokens = topTokensList.filter(t => t.source && (t.source.toString().toUpperCase().includes('CLAWNCHER') || t.source.toString().toUpperCase().includes('BANKR')));
 
                     // Top 5 Market Cap
                     const top5MarketCap = [...clawncherTokens].sort((a, b) => b.marketCap - a.marketCap).slice(0, 5);
